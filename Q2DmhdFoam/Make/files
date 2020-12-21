@@ -1,0 +1,3 @@
+Q2DmhdFoam.C
+
+EXE = $(FOAM_APPBIN)/Q2DmhdFoam
