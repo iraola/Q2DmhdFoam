@@ -52,10 +52,15 @@
     (
         transportProperties.lookup("b")
     );
+    
+    dimensionedScalar sigma
+    (
+        transportProperties.lookup("sigma")
+    );
 
     dimensionedScalar tauHa
     (
-        b*sqrt(rho0/(dimensionedScalar(transportProperties.lookup("sigma"))*nu))
+        b*sqrt(rho0/(sigma*nu))
     );
 
     dimensionedScalar q0
