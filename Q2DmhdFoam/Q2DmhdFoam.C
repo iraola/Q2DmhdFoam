@@ -25,8 +25,9 @@ Application
     Q2DmhdFoam
 
 Description
-    Transient solver for buoyancy-driven laminar flow of incompressible
-    Newtonian fluids using the Boussinesq Model
+    Transient solver for 2D buoyancy-driven laminar magnetohydrodynamic
+	flow of incompressible conducting fluids using the Boussinesq Model and
+	the Sommeria and Moreau (1983) approximation
 
 \*---------------------------------------------------------------------------*/
 
