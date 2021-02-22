@@ -42,7 +42,6 @@
         mesh
     );
 
-
 #   include "createPhi.H"
     
     Info<< "Reading field B\n" << endl;
@@ -111,5 +110,21 @@
         ),
         q0*exp(- (y/a + 1) * m),
         sourceTBCTypes
+    );
+
+
+    Info<< "Creating field vorticity\n" << endl;
+    volVectorField vorticity
+    (
+        IOobject
+        (
+            "vorticity",
+            runTime.timeName(),
+            mesh,
+            IOobject::NO_READ,
+            IOobject::AUTO_WRITE
+        ),
+        mesh,
+        dimensionedVector("vorticity", dimVelocity/dimLength, vector(0.0, 0.0, 0.0))
     );
 

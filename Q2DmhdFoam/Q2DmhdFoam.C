@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     while (runTime.loop())
     {
         Info<< "Time = " << runTime.timeName() << nl << endl;
-        
+
 #       include "readTimeControls.H"
 #       include "CourantNo.H"
 #       include "setDeltaT.H"
@@ -122,6 +122,9 @@ int main(int argc, char *argv[])
         );
 
         rho = rho0*(scalar(1) - beta*(T - T0));
+
+        // Calculate vorticity
+        vorticity = fvc::curl(U);
 
         runTime.write();
 
