@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#import pdb; pdb.set_trace()
 import MHDutils as utils
 import numpy as np
 import matplotlib.pyplot as plt
@@ -129,7 +130,8 @@ theta = (T - 1/2*(Th + Tc))/(Th-Tc)
 y_analytic = np.linspace(-tag_dict['a'],tag_dict['a'])
 W_analytic = Gr/(2*Ha) * theta
 fig, ax = plt.subplots(figsize=(12,12))
-ax.plot(y_analytic[10:-10]/(2*tag_dict['a']), W_analytic[10:-10], label='Bulk analytical solution')
+ax.plot(y_analytic[10:-10]/(2*tag_dict['a']), W_analytic[10:-10],
+    label='Bulk analytical solution')
 
 # Q2DmhdFoam solution
 postProcess_dir = 'postProcessing/sets/'
@@ -139,6 +141,35 @@ y, Ux, Uy, Uz = np.loadtxt(raw_data_file, unpack=True)
 y = y - tag_dict['a']
 W = Ux / (tag_dict['nu'] / (2*tag_dict['a']))
 ax.plot(y/(2*tag_dict['a']), W, label='Q2DmhdFoam')
+# Print max velocity
+print('The Q2D maximum velocity is : ', np.max(W))
+
+# Plot derivative of the Q2D solution
+# Note: Use dimensionless Y. Y = y / l
+y_plot = np.zeros(len(y)-1)
+Y = y / (2*tag_dict['a'])
+dW = np.zeros(len(W)-1)
+for i in range(len(W) - 1):
+    dW[i] = (W[i+1] - W[i]) / (Y[i+1] - Y[i])
+    y_plot[i] = (Y[i] + Y[i+1])/2
+fig1, ax1 = plt.subplots(figsize=(12,12))
+ax1.plot(y_plot, -dW, label='Q2D dW/dY')
+ax1.set_ylim(bottom=0)
+
+# Write out tagawa values
+out_file = '../tagawa.csv'
+out_line = str(Ha) + ' ' + str(np.max(W)) + ' ' + str(
+    -dW[int((len(dW)-1)/2)]) + '\n'
+# Check if the file exists
+if not os.path.exists(out_file):
+    text = out_line
+else:
+    with open(out_file, 'r') as file:
+        text = file.read()
+    text = text + out_line
+# Write file
+with open(out_file, 'w') as file:
+    file.write(text)
 
 # Plot config
 ax.set_xlabel('Dimensionless length, $X=x/l$')
