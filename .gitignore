@@ -1,4 +1,5 @@
 **/linux64GccDPInt32Opt/
+**/__pycache__/
 *.dep
 faces
 neighbour
