@@ -44,9 +44,7 @@ tag_dict.update(phys_dict)
 # Define directory names
 base_dir = 'baseCaseTagawa'
 curr_dir = 'tagawa'
-# Create new case directory and remove old if exists
-if os.path.exists(curr_dir):
-    sp.call('rm -r ' + curr_dir, shell=True)
+# Create new case directory
 sp.call('cp -r ' + base_dir + ' ' + curr_dir, shell=True)
 
 ######################
@@ -77,7 +75,7 @@ print('Temperature difference is {} for Grashof = {}'.format(delta_T,Gr))
 ######################
 
 l_side = tag_dict['a']/np.sqrt(Ha)
-N_bl = 50
+N_bl = 25
 G_bl, _, cmax = utils.lenC2CN(l_side, N_bl)
 
 print('Ha = {}'.format(Ha))
@@ -88,7 +86,7 @@ print('cmax = {}'.format(cmax))
 
 # This is HALF the length of the bulk
 l_bulk = tag_dict['a'] - l_side
-N_bulk, G_bulk, _ = utils.lenCminC2C(l_bulk, cmax, c2c=1.01)
+N_bulk, G_bulk, _ = utils.lenCminC2C(l_bulk, cmax)
 print('HALF BULK')
 print('bulk half length = {}'.format(l_bulk))
 print('N = {}'.format(N_bulk))
@@ -101,7 +99,7 @@ mesh_dict = {
     'LyBL'      : tag_dict['a']-l_side,
     'LyNegBulk' : -tag_dict['a'],
     'LyNegBL'   : -(tag_dict['a']-l_side),
-    'Nx'        : 500,
+    'Nx'        : 100,
     'NyBulk'    : N_bulk,
     'NyBL'      : N_bl,
     'GyBulk'    : G_bulk,
