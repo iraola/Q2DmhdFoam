@@ -15,19 +15,14 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-5
+4
 (
-    inlet
+    inletOutlet
     {
-        type            patch;
-        nFaces          104;
+        type            cyclic;
+        nFaces          208;
         startFace       931;
-    }
-    outlet
-    {
-        type            patch;
-        nFaces          104;
-        startFace       1035;
+        featureCos      0.9;
     }
     lowerWall
     {

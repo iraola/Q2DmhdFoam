@@ -20,14 +20,9 @@ internalField   uniform 0;
 
 boundaryField
 {
-    inlet
+    inletOutlet
     {
-        type            zeroGradient;
-    }
-
-    outlet
-    {
-        type            fixedValue;
+        type            cyclic;
         value           uniform 0;
     }
 
