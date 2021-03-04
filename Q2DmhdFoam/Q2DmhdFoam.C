@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
         );
 
         solve(UEqn == -fvc::grad(p));
-
+        
         // --- PISO loop
 
         while (piso.correct())
@@ -110,6 +110,8 @@ int main(int argc, char *argv[])
 
             U -= rUA*fvc::grad(p);
             U.correctBoundaryConditions();
+
+#           include "pump.H"
         }
 
         // Solve energy equation
