@@ -6,40 +6,46 @@ import matplotlib.pyplot as plt
 import subprocess as sp
 import os
 
-def meshAndGo(write=False):
+def meshAndGo(Ha, Re, Gr, write=False, plot=False, **kwargs):
     ######################
     ### INITIALIZATIONS
     ######################
     # Get main parameters from input file
-    param = np.loadtxt('MHDinput', unpack=True, skiprows=2)
-    Ha = param[0]
-    Re = param[1]
-    Gr = param[2]
+    # param = np.loadtxt('MHDinput', unpack=True, skiprows=2)
+    # Ha = param[0]
+    # Re = param[1]
+    # Gr = param[2]
 
-    # Define main tag dictionary
-    tag_dict = {
-        'B'   : '?',
-        'Ux'  : '?',
-        'T0'  : 0.0,
-        'a'   : 0.15/2,
-        'b'   : 0.15/2,
-        'q0'  : 0,
-        'qWall' : 0,
-        'm'   : 1,
-        'Th'  : '?',
-        'Tc'  : '?',
-        'g'   : -9.81
-    }
-
-    # Update main dictionary with physical properties
-    phys_dict = {
-        'rho0'   : 9720,
-        'nu'     : 1.54e-7,
-        'Cp'     : 189,
-        'k'      : 22.36,
-        'beta'   : 1.2e-4,
-        'sigma'  : 763000
-    }
+    # Optional arguments
+    if 'tag_dict' in kwargs:
+        tag_dict = kwargs['tag_dict']
+    else:
+        # Define main tag dictionary
+        tag_dict = {
+            'B'   : '?',
+            'Ux'  : '?',
+            'T0'  : 0.0,
+            'a'   : 0.15/2,
+            'b'   : 0.15/2,
+            'q0'  : 0,
+            'qWall' : 0,
+            'm'   : 1,
+            'Th'  : '?',
+            'Tc'  : '?',
+            'g'   : -9.81
+        }
+    if 'phys_dict' in kwargs:
+        phys_dict = kwargs['phys_dict']
+    else:
+        # Update main dictionary with physical properties
+        phys_dict = {
+            'rho0'   : 9720,
+            'nu'     : 1.54e-7,
+            'Cp'     : 189,
+            'k'      : 22.36,
+            'beta'   : 1.2e-4,
+            'sigma'  : 763000
+        }
     tag_dict.update(phys_dict)
 
     # Define directory names
@@ -55,7 +61,7 @@ def meshAndGo(write=False):
     ######################
     # Calculations from the parametrization of the problem and assign
     # them to the dictionaries
-    B = Ha / (2*tag_dict['b']) * np.sqrt(tag_dict['nu'] * tag_dict['rho0'] /
+    B = Ha / (2*tag_dict['a']) * np.sqrt(tag_dict['nu'] * tag_dict['rho0'] /
         tag_dict['sigma'])
     Ux = Re * tag_dict['nu'] / tag_dict['a']
     # Calculate delta_T from the input Grashof number
@@ -132,9 +138,6 @@ def meshAndGo(write=False):
     theta = (T - 1/2*(Th + Tc))/(Th-Tc)
     y_analytic = np.linspace(-tag_dict['a'],tag_dict['a'])
     W_analytic = Gr/(2*Ha) * theta
-    fig, ax = plt.subplots(figsize=(12,12))
-    ax.plot(y_analytic[10:-10]/(2*tag_dict['a']), W_analytic[10:-10],
-        label='Bulk analytical solution')
 
     # Q2DmhdFoam solution
     postProcess_dir = 'postProcessing/sets/'
@@ -143,7 +146,6 @@ def meshAndGo(write=False):
     y, Ux, Uy, Uz = np.loadtxt(raw_data_file, unpack=True)
     y = y - tag_dict['a']
     W = Ux / (tag_dict['nu'] / (2*tag_dict['a']))
-    ax.plot(y/(2*tag_dict['a']), W, label='Q2DmhdFoam')
     # Print max velocity
     print('The Q2D maximum velocity is : ', np.max(W))
 
@@ -155,9 +157,7 @@ def meshAndGo(write=False):
     for i in range(len(W) - 1):
         dW[i] = (W[i+1] - W[i]) / (Y[i+1] - Y[i])
         y_plot[i] = (Y[i] + Y[i+1])/2
-    fig1, ax1 = plt.subplots(figsize=(12,12))
-    ax1.plot(y_plot, -dW, label='Q2D dW/dY')
-    ax1.set_ylim(bottom=0)
+
 
     if write:
         # Write out tagawa values
@@ -175,9 +175,23 @@ def meshAndGo(write=False):
         with open(out_file, 'w') as file:
             file.write(text)
 
-    # Plot config
-    ax.set_xlabel('Dimensionless length, $X=x/l$')
-    ax.set_ylabel('Dimensionless velocity, $W$')
-    ax.legend(loc='upper right')
-    plt.show()
-    fig.savefig('tagawaVal.eps',format='eps',dpi=1000)
+    # PLOT
+    if plot == True:
+        fig, ax = plt.subplots(figsize=(12,12))
+        ax.plot(y_analytic[10:-10]/(2*tag_dict['a']), W_analytic[10:-10],
+            label='Bulk analytical solution')
+        ax.plot(y/(2*tag_dict['a']), W, label='Q2DmhdFoam')
+        fig1, ax1 = plt.subplots(figsize=(12,12))
+        ax1.plot(y_plot, -dW, label='Q2D dW/dY')
+        ax1.set_ylim(bottom=0)
+        # Plot config
+        ax.set_xlabel('Dimensionless length, $X=x/l$')
+        ax.set_ylabel('Dimensionless velocity, $W$')
+        ax.legend(loc='upper right')
+        fig.savefig('tagawaVal.eps',format='eps',dpi=1000)
+        plt.show()
+
+    # Return to original directory
+    os.chdir('..')
+
+    return np.max(W), np.max(W_analytic)
