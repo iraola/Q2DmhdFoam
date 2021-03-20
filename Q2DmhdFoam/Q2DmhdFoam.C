@@ -111,7 +111,10 @@ int main(int argc, char *argv[])
             U -= rUA*fvc::grad(p);
             U.correctBoundaryConditions();
 
-#           include "pump.H"
+            if (magUbar.value()>SMALL)
+            {
+#               include "pump.H"
+            }
         }
 
         // Solve energy equation
