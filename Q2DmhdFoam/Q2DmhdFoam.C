@@ -113,6 +113,7 @@ int main(int argc, char *argv[])
 
             if (magUbar.value()>SMALL)
             {
+                // Fully-develeped works only if Ubar > 0 (user-defined)
 #               include "pump.H"
             }
         }
@@ -130,6 +131,12 @@ int main(int argc, char *argv[])
 
         // Calculate vorticity
         vorticity = fvc::curl(U);
+
+        // Perform fully-developed temperature averaging
+        if (fd)
+        {
+#           include "fullyDeveloped.H"
+        }
 
         runTime.write();
 

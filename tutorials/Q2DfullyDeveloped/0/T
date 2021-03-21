@@ -29,13 +29,13 @@ boundaryField
     upperWall
     {
         type            fixedValue;
-        value           uniform -2.9846088018021425e-05;
+        value           uniform 0.0;
     }
 
     lowerWall
     {
         type            fixedValue;
-        value           uniform 2.9846088018021425e-05;
+        value           uniform 0.0;
     }
 
     frontAndBack

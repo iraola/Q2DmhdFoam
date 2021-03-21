@@ -155,3 +155,6 @@ else
         << endl;
 };
 */
+
+// Temperature averaging variables
+dimensionedScalar tempVolAverage("tempVolAverage", dimensionSet(0,0,0,1,0,0,0), 0);
