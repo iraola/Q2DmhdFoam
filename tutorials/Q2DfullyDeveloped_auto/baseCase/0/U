@@ -20,15 +20,9 @@ internalField   uniform (/Ux/ 0 0);
 
 boundaryField
 {
-    inlet
+    inletOutlet
     {
-        type            fixedValue;
-        value           uniform (/Ux/ 0 0);
-    }
-
-    outlet
-    {
-        type            fixedValue;
+        type            cyclic;
         value           uniform (/Ux/ 0 0);
     }
 
