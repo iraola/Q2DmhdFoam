@@ -20,14 +20,10 @@ internalField   uniform /B/;
 
 boundaryField
 {
-    inlet
+    inletOutlet
     {
-        type            zeroGradient;
-    }
-
-    outlet
-    {
-        type            zeroGradient;
+        type            cyclic;
+        value           uniform /B/;
     }
 
     lowerWall

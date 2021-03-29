@@ -49,8 +49,8 @@ def meshAndGo(Ha, Re, Gr, write=False, plot=False, **kwargs):
     tag_dict.update(phys_dict)
 
     # Define directory names
-    base_dir = 'baseCaseTagawa'
-    curr_dir = 'tagawa'
+    base_dir = 'baseCase'
+    curr_dir = 'case'
     # Create new case directory and remove old if exists
     if os.path.exists(curr_dir):
         sp.call('rm -r ' + curr_dir, shell=True)
@@ -102,8 +102,8 @@ def meshAndGo(Ha, Re, Gr, write=False, plot=False, **kwargs):
     print('G = {}'.format(G_bulk))
 
     mesh_dict = {
-        'Lx'        : 200*tag_dict['a'],
-        'LxHalf'    : 200*tag_dict['a'] / 2,
+        'Lx'        : 20*tag_dict['a'],
+        'LxHalf'    : 20*tag_dict['a'] / 2,
         'LyBulk'    : tag_dict['a'],
         'LyBL'      : tag_dict['a']-l_side,
         'LyNegBulk' : -tag_dict['a'],
