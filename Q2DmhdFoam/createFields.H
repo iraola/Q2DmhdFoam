@@ -128,3 +128,33 @@
         dimensionedVector("vorticity", dimVelocity/dimLength, vector(0.0, 0.0, 0.0))
     );
 
+// Creating gradP field for fully developed case
+dimensionedScalar gradP
+(
+    "gradP",
+    dimensionSet(0, 1, -2, 0, 0), 
+    0.0
+);
+/*
+scalar gradP0 = 1;
+
+IFstream gradPFile
+(
+    runTime.path()/runTime.timeName()/"uniform"/"gradP.raw"
+);
+
+if(gradPFile.good())
+{
+    gradPFile >> gradP;
+    Info<< "Reading average pressure gradient" <<endl
+        << endl;
+}
+else
+{
+    Info<< "Initializing with 0 pressure gradient" <<endl
+        << endl;
+};
+*/
+
+// Temperature averaging variables
+dimensionedScalar tempVolAverage("tempVolAverage", dimensionSet(0,0,0,1,0,0,0), 0);

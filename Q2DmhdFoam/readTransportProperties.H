@@ -78,5 +78,17 @@
         readScalar(transportProperties.lookup("coord"))
     );
 
+    //  Read centerline velocity for channel simulations
+    dimensionedVector Ubar
+    (
+        transportProperties.lookup("Ubar")
+    );
 
+    //  Magnitude of Ubar
+    dimensionedScalar magUbar = mag(Ubar);
 
+    // Boolean for fully-developed flow selection
+    bool fd
+    (
+        readBool(transportProperties.lookup("fd"))
+    );

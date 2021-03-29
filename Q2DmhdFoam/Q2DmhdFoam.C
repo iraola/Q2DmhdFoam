@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
         );
 
         solve(UEqn == -fvc::grad(p));
-
+        
         // --- PISO loop
 
         while (piso.correct())
@@ -110,6 +110,12 @@ int main(int argc, char *argv[])
 
             U -= rUA*fvc::grad(p);
             U.correctBoundaryConditions();
+
+            if (magUbar.value()>SMALL)
+            {
+                // Fully-develeped works only if Ubar > 0 (user-defined)
+#               include "pump.H"
+            }
         }
 
         // Solve energy equation
@@ -125,6 +131,12 @@ int main(int argc, char *argv[])
 
         // Calculate vorticity
         vorticity = fvc::curl(U);
+
+        // Perform fully-developed temperature averaging
+        if (fd)
+        {
+#           include "fullyDeveloped.H"
+        }
 
         runTime.write();
 
