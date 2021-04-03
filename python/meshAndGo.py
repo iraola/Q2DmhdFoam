@@ -6,7 +6,17 @@ import matplotlib.pyplot as plt
 import subprocess as sp
 import os
 
-def meshAndGo(Ha, Re, Gr, write=False, plot=False, **kwargs):
+def meshAndGo(Ha, Re, Gr, Nx=100, Lx=20, write=False, plot=False, **kwargs):
+    '''
+    Setup, mesh, run and plot results for a Q2DmhdFOAM case
+
+    Parameters
+    ----------
+    Nx : Number of cells in the direction of the flow
+    Lx : Proportion of the length in the direction of the flow with respect to
+        the half-length 'a' of the channel
+    '''
+
     ######################
     ### INITIALIZATIONS
     ######################
@@ -102,13 +112,13 @@ def meshAndGo(Ha, Re, Gr, write=False, plot=False, **kwargs):
     print('G = {}'.format(G_bulk))
 
     mesh_dict = {
-        'Lx'        : 20*tag_dict['a'],
-        'LxHalf'    : 20*tag_dict['a'] / 2,
+        'Lx'        : Lx*tag_dict['a'],
+        'LxHalf'    : Lx*tag_dict['a'] / 2,
         'LyBulk'    : tag_dict['a'],
         'LyBL'      : tag_dict['a']-l_side,
         'LyNegBulk' : -tag_dict['a'],
         'LyNegBL'   : -(tag_dict['a']-l_side),
-        'Nx'        : 100,
+        'Nx'        : Nx,
         'NyBulk'    : N_bulk,
         'NyBL'      : N_bl,
         'GyBulk'    : G_bulk,
@@ -161,7 +171,7 @@ def meshAndGo(Ha, Re, Gr, write=False, plot=False, **kwargs):
 
     if write:
         # Write out tagawa values
-        out_file = '../tagawa.csv'
+        out_file = '../case.csv'
         out_line = str(Ha) + ' ' + str(np.max(W)) + ' ' + str(
             -dW[int((len(dW)-1)/2)]) + '\n'
         # Check if the file exists
@@ -188,7 +198,7 @@ def meshAndGo(Ha, Re, Gr, write=False, plot=False, **kwargs):
         ax.set_xlabel('Dimensionless length, $X=x/l$')
         ax.set_ylabel('Dimensionless velocity, $W$')
         ax.legend(loc='upper right')
-        fig.savefig('tagawaVal.eps',format='eps',dpi=1000)
+        fig.savefig('results.eps',format='eps',dpi=1000)
         plt.show()
 
     # Return to original directory
