@@ -28,14 +28,12 @@ boundaryField
 
     upperWall
     {
-        type            fixedValue;
-        value           uniform 0.0;
+        type            zeroGradient;
     }
 
     lowerWall
     {
-        type            fixedValue;
-        value           uniform 0.0;
+        type            zeroGradient;
     }
 
     frontAndBack
