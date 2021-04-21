@@ -92,3 +92,19 @@
     (
         readBool(transportProperties.lookup("fd"))
     );
+
+    // Declare scalar (float) for steady state criteria reached
+    scalar epsSteady
+    (
+        readScalar(runTime.controlDict().lookup("epsSteady"))
+    );
+
+    // Other steady-state declarations
+    scalar maxT = 0;
+    scalar maxT0 = 1;
+    scalar repsmaxT = 1;
+    scalar maxU = 0;
+    scalar maxU0 = 1;
+    scalar repsmaxU = 1;
+    bool steadyState = false;
+
