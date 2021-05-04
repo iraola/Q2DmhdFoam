@@ -22,25 +22,25 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         3000;
+endTime         1e6;
 
 deltaT          0.005;
 
 writeControl    adjustableRunTime;
 
-writeInterval   25;
+writeInterval   1000;
 
-purgeWrite      0;
+purgeWrite      10;
 
 writeFormat     ascii;
 
-writePrecision  6;
+writePrecision  12;
 
 writeCompression uncompressed;
 
 timeFormat      general;
 
-timePrecision   6;
+timePrecision   10;
 
 runTimeModifiable yes;
 
@@ -48,7 +48,7 @@ adjustTimeStep  yes;
 
 epsSteady       1e-8;
 
-maxCo           0.5;
+maxCo           0.9;
 
 
 // ************************************************************************* //

@@ -28,10 +28,14 @@ phys_dict = {
     'beta'   : 1.2e-4,
     'sigma'  : 763000
 }
-
+mesh_dict = {
+    'Lx'    : 0.1,
+    'LxHalf': 0.1/2,
+    'Nx'    : 1
+}
 # Run case
-meshAndGo(Ha=100, Re=100, Gr=0, Nx=1, Lx=0.1,
-    tag_dict=tag_dict, phys_dict=phys_dict)
+meshAndGo(Ha=100, Re=100, Gr=1e4,
+    mesh_dict=mesh_dict, tag_dict=tag_dict, phys_dict=phys_dict)
 
 # Solution for the Poiseuille Flow between two infinite plates
 h = 2*tag_dict['a']
