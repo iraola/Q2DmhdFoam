@@ -83,7 +83,7 @@ def meshAndGo(Ha, Re, Gr, volumetric_heat=True, write=False, plot=False, **kwarg
     # FROM GRASHOF:
     if volumetric_heat:
         # Calculate exponential deposition q0 (tepot case)
-        delta_T = Gr * tag_dict['nu']**2 / (tag_dict['g']*tag_dict['beta']*
+        delta_T = Gr * tag_dict['nu']**2 / (abs(tag_dict['g'])*tag_dict['beta']*
                     tag_dict['a']**3)
         S0 = delta_T * tag_dict['k'] / (tag_dict['a']**2)
         q0 = S0 * (2 * tag_dict['a'] * tag_dict['m']) / (1
