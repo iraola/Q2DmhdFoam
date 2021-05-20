@@ -1,7 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from meshAndGo import *
 import subprocess as sp
+import pandas as pd
+import sys
+# import custom modules
+sys.path.insert(1, '../../python')
+from meshAndGo import meshAndGo
+from MHDutils import getLatestTime
 
 def plot_csv(file='tagawa.csv'):
     Ha, maxU, gradU = np.loadtxt(file, unpack=True)
@@ -77,10 +82,10 @@ def plot_plot(values1, values2, x, labels, **kwargs):
         ax.set_xlabel(kwargs['xlabel'])
     if 'ylim_min' in kwargs:
         ax.set_ylim(ymin=kwargs['ylim_min'])
-    fig.savefig('tepot_comparison.png',format='png',dpi=1000)
+    fig.savefig('validation_tagawa.png',format='png',dpi=1000)
     plt.show()
 
-def validation_tepot(Ha, Re, Gr, AR_list):
+def validation_tepot_AR(Ha, Re, Gr, AR_list):
     '''
     '''
     # Needed tag dicts (because we'll modify them)
@@ -114,7 +119,7 @@ def validation_tepot(Ha, Re, Gr, AR_list):
         i = i + 1
         # Save directory for analysis
         sp.call("mv tagawa tagawa_" + str(AR), shell=True)
-        
+
     # READ TEPOT VALUES
     _, maxU_tepot = np.loadtxt('tepot_tagawa_100.out', skiprows=1, unpack=True)
     maxW_tepot = maxU_tepot / (tag_dict['nu'] / (2*tag_dict['a']))
@@ -123,7 +128,74 @@ def validation_tepot(Ha, Re, Gr, AR_list):
         labels=['tepot max. velocity', 'Q2D max. velocity'], xlabel='AR',
         ylim_min=0)
 
+#AR_list = [1.5, 3, 20./3., 10, 15, 20] # 20/3 = 6.6666...
 
-# Aspect Ratio list to loop in
-AR_list = [1.5, 3, 20./3., 10, 15, 20] # 20/3 = 6.6666...
-validation_tepot(Ha=100, Re=0, Gr=1e4, AR_list=AR_list)
+### INITIALIZATIONS
+validation_file = 'tagawa_tab'
+postprocess_dir = 'case/postProcessing/sets/'
+postprocess_file = 'line_centreProfile_U.xy'
+# Case setup tags
+tag_dict = {
+    'B'   : '?',
+    'Ux'  : '?',
+    'T0'  : 0.0,
+    'a'   : 0.15/2,
+    'b'   : 0.15/2,
+    'q0'  : 0,
+    'qWall' : 0,
+    'm'   : 1,
+    'Th'  : '?',
+    'Tc'  : '?',
+    'g'   : -9.81}
+phys_dict = {
+    'rho0'   : 9720,
+    'nu'     : 1.54e-7,
+    'Cp'     : 189,
+    'k'      : 22.36,
+    'beta'   : 1.2e-4,
+    'sigma'  : 763000}
+mesh_dict = {
+    'Lx'    : 30,   # x200 times the '2a' length = 200*0.075*2
+    'LxHalf': 30/2,
+    'Nx'    : 100}
+# Read validation data
+Re = 0
+Gr = 1e4
+data_val = pd.read_csv(validation_file, engine='python', delimiter='\s',
+        names=['Ha', 'maxU', 'Ugrad'], header=None, skiprows=2)
+Ha_list = data_val['Ha'].to_numpy()
+maxW_th = data_val['maxU'].to_numpy()
+
+
+### LOOP
+# Remove old directories present
+sp.call("rm -r -f case_*", shell=True)
+fig1, ax1 = plt.subplots(figsize=(12,6))
+maxW_q2d = np.zeros(len(Ha_list))
+i = 0
+for Ha in Ha_list:
+    meshAndGo(Ha, Re, Gr, volumetric_heat=False,
+        mesh_dict=mesh_dict, tag_dict=tag_dict, phys_dict=phys_dict)
+    # Store the simulated case in other directory
+    sp.call("cp -r case case_" + str(Ha), shell=True)
+    # Get latest time directory name and load simulation data
+    latest_time = getLatestTime(postprocess_dir)
+    filename = postprocess_dir + latest_time + '/' + postprocess_file
+    # Plot sim. data
+    z, U, _, _ = np.loadtxt(filename, unpack= True)
+    # Get dimensionless velocity
+    W = U / phys_dict['nu'] * 2 * tag_dict['a']
+    z = (z - tag_dict['a']) / tag_dict['a']
+    # Store maximum dimensionless velocity
+    maxW_q2d[i] = np.max(W)
+    print('\nMaximum dimensionless velocity: ' + str(maxW_q2d[i]) + '\n' )
+    # Plot simulation profile
+    ax1.plot(z, W, label='Q2D Ha='+str(Gr))
+    i += 1
+ax1.legend(loc='best')
+
+# PLOT
+plot_plot(maxW_th, maxW_q2d, x=Ha_list,
+    labels=['validation max. velocity', 'Q2D max. velocity'], xlabel='Ha',
+    ylim_min=0)
+plt.show()

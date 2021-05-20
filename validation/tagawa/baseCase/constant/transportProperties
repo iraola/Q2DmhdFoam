@@ -10,43 +10,37 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      controlDict;
+    object      transportProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application Q2DmhdFoam;
+rho0            rho0 [1 -3 0 0 0 0 0] /rho0/;
 
-startFrom       startTime;
+nu              nu [0 2 -1 0 0 0 0] /nu/;
 
-startTime       0;
+T0              T0 [0 0 0 1 0 0 0] /T0/;
 
-stopAt          endTime;
+Cp              Cp [0 2 -2 -1 0 0 0] /Cp/;
 
-endTime         100000;
+k               k [1 1 -3 -1 0 0 0] /k/;
 
-deltaT          0.005;
+beta            beta [0 0 0 -1 0 0 0] /beta/;
 
-writeControl    adjustableRunTime;
+a               a [0 1 0 0 0 0 0] /a/;
 
-writeInterval   5000;
+b               b [0 1 0 0 0 0 0] /b/;
 
-purgeWrite      0;
+sigma           sigma [-1 -3 3 0 0 2 0] /sigma/;
 
-writeFormat     ascii;
+q0              q0 [1 -1 -3 0 0 0 0] /q0/;
 
-writePrecision  6;
+m               m [0 0 0 0 0 0 0 ] /m/;
 
-writeCompression uncompressed;
+coord           2;  //X_axis:1, Y_axis:2, Z_axis:3
 
-timeFormat      general;
+Ubar            Ubar [0 1 -1 0 0 0 0] (/Ux/ 0 0);
 
-timePrecision   6;
-
-runTimeModifiable yes;
-
-adjustTimeStep  yes;
-
-maxCo           0.5;
+fd              false; // "true" for fully developet temp. averaging
 
 
 // ************************************************************************* //
