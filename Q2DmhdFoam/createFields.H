@@ -128,13 +128,14 @@
         dimensionedVector("vorticity", dimVelocity/dimLength, vector(0.0, 0.0, 0.0))
     );
 
-// Creating gradP field for fully developed case
-dimensionedScalar gradP
-(
-    "gradP",
-    dimensionSet(0, 1, -2, 0, 0), 
-    0.0
-);
+    
+    Info<< "Creating gradP field for fully developed case\n" << endl;
+    dimensionedScalar gradP
+    (
+        "gradP",
+        dimensionSet(0, 1, -2, 0, 0), 
+        0.0
+    );
 /*
 scalar gradP0 = 1;
 
@@ -156,5 +157,8 @@ else
 };
 */
 
-// Temperature averaging variables
-dimensionedScalar tempVolAverage("tempVolAverage", dimensionSet(0,0,0,1,0,0,0), 0);
+    // Temperature averaging variables
+    dimensionedScalar tempVolAverage("tempVolAverage", dimensionSet(0,0,0,1,0,0,0), 0);
+    dimensionedScalar magUbarStar("magUbarStar", dimVelocity, 0);
+    dimensionedScalar gradPplus("gradPplus", dimensionSet(0, 1, -2, 0, 0), 0);
+

@@ -83,9 +83,8 @@
     (
         transportProperties.lookup("Ubar")
     );
-
-    //  Magnitude of Ubar
     dimensionedScalar magUbar = mag(Ubar);
+    vector flowDirection = (Ubar/magUbar).value();
 
     // Boolean for fully-developed flow selection
     bool fd

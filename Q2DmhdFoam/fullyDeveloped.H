@@ -12,6 +12,20 @@ maxU0 = maxU;
 maxU = gMax(mag(U.component(vector::X))());
 repsmaxU = fabs((maxU - maxU0) / (maxU0 + SMALL)) / runTime.deltaT().value();
 
+// Write data
+if  ((Pstream::master()))
+{
+
+ofile   << runTime.timeName()         << '\t'
+        << magUbarStar.value()        << '\t'
+        << gradPplus.value()          << '\t'
+        << gradP.value()              << '\t'
+        << repsmaxU                   << '\t'
+        << repsmaxT                 << '\t'
+        << endl;
+}
+
+
 scalar maxEpsilon = max(repsmaxT, repsmaxU);
 if ((maxEpsilon < epsSteady))
 {

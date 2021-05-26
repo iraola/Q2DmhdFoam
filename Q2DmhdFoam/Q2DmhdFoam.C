@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
 #   include "createTimeControls.H"
 #   include "CourantNo.H"
 #   include "setInitialDeltaT.H"
+#   include "ioFiles.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -72,18 +73,19 @@ int main(int argc, char *argv[])
           + fvm::div(phi, U)
           - fvm::laplacian(nu, U)
          ==
-           -beta*(T - T0)*g
-           -fvm::Sp(mag(B)/tauHa, U)
+          - beta*(T - T0)*g
+          - fvm::Sp(mag(B)/tauHa, U)
+          + flowDirection*gradP
         );
 
         solve(UEqn == -fvc::grad(p));
         
+        volScalarField rUA = 1.0/UEqn.A();
+
         // --- PISO loop
 
         while (piso.correct())
         {
-            volScalarField rUA = 1.0/UEqn.A();
-
             U = rUA*UEqn.H();
             phi = (fvc::interpolate(U) & mesh.Sf())
                 + fvc::ddtPhiCorr(rUA, U, phi);
@@ -110,12 +112,12 @@ int main(int argc, char *argv[])
 
             U -= rUA*fvc::grad(p);
             U.correctBoundaryConditions();
+        }
 
-            if (magUbar.value()>SMALL)
-            {
-                // Fully-develeped works only if Ubar > 0 (user-defined)
-#               include "pump.H"
-            }
+        if (magUbar.value()>SMALL)
+        {
+            // Fully-develeped works only if Ubar > 0 (user-defined)
+#           include "pump.H"
         }
 
         // Solve energy equation
