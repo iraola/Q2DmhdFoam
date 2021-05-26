@@ -31,9 +31,8 @@ def animate(i):
     magUbarStar     =   mydata[:,1]
     gradPplus       =   mydata[:,2]
     gradP           =   mydata[:,3]
-    gradPvec        =   mydata[:,4]
-    repsmaxU        =   mydata[:,5]
-    repsmaxT        =   mydata[:,6]
+    repsmaxU        =   mydata[:,4]
+    repsmaxT        =   mydata[:,5]
 #==============================================================================
     ax1.clear()
     ax2.clear()
@@ -42,8 +41,7 @@ def animate(i):
 
     ax1.plot(runTime, magUbarStar, '-', label='magUbarStar')
     ax2.plot(runTime, gradPplus, '-', label='gradPplus'  , color='r')
-    ax2.plot(runTime, gradP, '-', label='gradP', color='k')
-    ax3.plot(runTime, gradPvec, '-', label='gradPvec', color='b')
+    ax3.plot(runTime, gradP, '-', label='gradP', color='k')
     ax4.plot(runTime, repsmaxU, '-', label='repsmaxU', color='b')
     ax4.plot(runTime, repsmaxT, '-', label='repsmaxT', color='r')
 
