@@ -1,6 +1,6 @@
 **/linux64GccDPInt32Opt/
 **/__pycache__/
-**/case/*
+**/case*
 *.dep
 faces
 neighbour
