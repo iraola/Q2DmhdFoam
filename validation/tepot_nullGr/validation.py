@@ -87,4 +87,5 @@ for file in os.listdir(validation_dir):
 
 
 ax.legend(loc='best')
+fig.savefig('validation_tepot_nullGr.png',format='png',dpi=200)
 plt.show()
