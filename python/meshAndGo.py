@@ -115,7 +115,10 @@ def meshAndGo(Ha, Re, Gr, volumetric_heat=True, write=False, plot=False, **kwarg
     Lx = 20     # Lx : Proportion of the length in the direction of the flow
                 # with respect to the half-length 'a' of the channel
     # Mesh MHD calculations
-    l_side = tag_dict['a']/np.sqrt(Ha)
+    if Ha == 0:
+        l_side = tag_dict['a']/10
+    else:
+        l_side = tag_dict['a']/np.sqrt(Ha)
     N_bl = 25
     G_bl, _, cmax = utils.lenC2CN(l_side, N_bl)
 
