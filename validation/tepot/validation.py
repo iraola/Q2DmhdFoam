@@ -15,6 +15,8 @@ from MHDutils import getLatestTime
 validation_dir = 'samples'
 postprocess_dir = 'case/postProcessing/sets/'
 postprocess_file = 'line_centreProfile_U.xy'
+color_q2d = ['b', 'g', 'r', 'm', 'darkorange']                        # strong colors
+color_val = ['royalblue', 'limegreen', 'salmon', 'violet', 'orange']  # light colors
 # Case setup tags
 tag_dict = {
     'B'   : '?',
@@ -47,14 +49,15 @@ fig, ax = plt.subplots(figsize=(12,6))
 def getConditions(filename):
     ''' Get Ha, Re, Gr from the name of a file as real numbers'''
     my_list = filename.split('_')
-    Ha = float(my_list[1])
-    Re = float(my_list[2])
-    Gr = float(my_list[3])
+    Ha = float(my_list[3])
+    Re = float(my_list[4])
+    Gr = float(my_list[5])
     return Ha, Re, Gr
 
 ### LOOP
 # Remove old directories present
 sp.call("rm -r -f case_*", shell=True)
+i = 0
 for file in os.listdir(validation_dir):
     # Get dimless numbers from the filenames
     Ha, Re, Gr = getConditions(file)
@@ -77,12 +80,17 @@ for file in os.listdir(validation_dir):
     z = (z - a) / a
     U_val /= U_val.mean()
     U_val = np.flip(U_val)
-    z_val = (z_val - 2*a) / (2*a)
+    z_val = (z_val - a) / a
     # Plot simulation data
-    ax.plot(z, U, label='Q2D Ha=' + str(Ha) + ' Gr='+str(Gr))
+    label_q2d = 'Q2D Ha=' + str(Ha) + ' Gr='+str(Gr)
+    ax.plot(z, U, linestyle='-', color=color_q2d[i], label=label_q2d)
     # Plot validation data
-    ax.plot(z_val, U_val, label='tepot Ha=' + str(Ha) + ' Gr='+str(Gr))
+    label_val = 'tepot Ha=' + str(Ha) + ' Gr='+str(Gr)
+    ax.plot(z_val, U_val, linestyle='--', color=color_val[i], label=label_val)
+    # Update counter
+    i += 1
 
 
 ax.legend(loc='best')
+fig.savefig('validation_tepot.png',format='png',dpi=200)
 plt.show()
