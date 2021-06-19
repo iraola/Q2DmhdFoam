@@ -29,19 +29,23 @@ phys_dict = {
     'beta'   : 1.2e-4,
     'sigma'  : 763000
 }
+mesh_dict = {       # SETUP FOR CYCLIC ONE-CELL CASE
+    'Lx'    : 0.1,
+    'LxHalf': 0.1/2,
+    'Nx'    : 1}
 postprocess_dir = 'case/postProcessing/sets/'
 postprocess_file = 'line_centreProfile_U.xy'
 fig, ax = plt.subplots(figsize=(12,6))
 
 # Run case
 meshAndGo(Ha=0, Re=100, Gr=0, Nx=1, Lx=0.1,
-    tag_dict=tag_dict, phys_dict=phys_dict)
+    mesh_dict=mesh_dict, tag_dict=tag_dict, phys_dict=phys_dict)
 
 # Get latest time directory name and load simulation data
 latest_time = getLatestTime(postprocess_dir)
 filename = postprocess_dir + latest_time + '/' + postprocess_file
-z, U, _, _ = np.loadtxt(filename, unpack= True)
-ax.plot(z, U, label='Q2D')
+z, u_q2d, _, _ = np.loadtxt(filename, unpack= True)
+ax.plot(z, u_q2d, label='Q2D')
 
 # Solution for the Poiseuille Flow between two infinite plates
 _, _, _, gradP, _, _ = np.loadtxt('case/output.out', unpack= True)
@@ -49,7 +53,11 @@ h = 2*tag_dict['a']
 y = np.linspace(0, h)
 deltaP = gradP[-1]
 mu = phys_dict['rho0']*phys_dict['nu']
-u = deltaP/(2*mu) * y * (h-y)
-ax.plot(y,u, label='Poiseuille')
+u_val = (deltaP*phys_dict['rho0']) /(2*mu) * y * (h-y)
+ax.plot(y,u_val, label='Poiseuille')
 ax.legend(loc='best')
+
+print("Q2DmhdFOAM's mean velocity:", u_q2d.mean())
+print("Poiseuille's mean velocity:", u_val.mean())
+fig.savefig('validation_poiseuille.png',format='png',dpi=200)
 plt.show()
