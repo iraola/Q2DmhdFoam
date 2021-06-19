@@ -34,7 +34,7 @@ divSchemes
 
 laplacianSchemes
 {
-    default                      none;
+    default                     Gauss linear corrected;
     laplacian(nu,U)       Gauss linear corrected;
     laplacian((1|A(U)),p)          Gauss linear corrected;
     laplacian((k|(rho0*Cp)),T)   Gauss linear corrected;

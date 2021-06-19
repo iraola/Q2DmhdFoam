@@ -80,12 +80,12 @@ int main(int argc, char *argv[])
 
         solve(UEqn == -fvc::grad(p));
         
-        volScalarField rUA = 1.0/UEqn.A();
-
         // --- PISO loop
 
         while (piso.correct())
         {
+            rUA = 1.0/UEqn.A();
+            
             U = rUA*UEqn.H();
             phi = (fvc::interpolate(U) & mesh.Sf())
                 + fvc::ddtPhiCorr(rUA, U, phi);

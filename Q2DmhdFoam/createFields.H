@@ -136,29 +136,23 @@
         dimensionSet(0, 1, -2, 0, 0), 
         0.0
     );
-/*
-scalar gradP0 = 1;
-
-IFstream gradPFile
-(
-    runTime.path()/runTime.timeName()/"uniform"/"gradP.raw"
-);
-
-if(gradPFile.good())
-{
-    gradPFile >> gradP;
-    Info<< "Reading average pressure gradient" <<endl
-        << endl;
-}
-else
-{
-    Info<< "Initializing with 0 pressure gradient" <<endl
-        << endl;
-};
-*/
 
     // Temperature averaging variables
     dimensionedScalar tempVolAverage("tempVolAverage", dimensionSet(0,0,0,1,0,0,0), 0);
     dimensionedScalar magUbarStar("magUbarStar", dimVelocity, 0);
     dimensionedScalar gradPplus("gradPplus", dimensionSet(0, 1, -2, 0, 0), 0);
-
+    
+    // Other
+    volScalarField rUA
+    (
+        IOobject
+        (
+            "rUA",
+            runTime.timeName(),
+            mesh,
+            IOobject::NO_READ,
+            IOobject::NO_WRITE
+        ),
+        mesh,
+        dimensionedScalar("rUA", dimTime, 0.0)
+    );
