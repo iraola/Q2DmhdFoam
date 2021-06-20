@@ -140,6 +140,12 @@ int main(int argc, char *argv[])
 #           include "fullyDeveloped.H"
         }
 
+        // Steady-state convergence
+        if (ssCriteria)
+        {
+#           include "steadyState.H"            
+        }
+
         runTime.write();
 
         Info<< "ExecutionTime = " << runTime.elapsedCpuTime() << " s"

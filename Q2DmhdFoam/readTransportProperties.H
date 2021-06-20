@@ -97,6 +97,10 @@
     (
         readScalar(runTime.controlDict().lookup("epsSteady"))
     );
+    bool ssCriteria
+    (
+        readBool(runTime.controlDict().lookup("ssCriteria"))
+    );
 
     // Other steady-state declarations
     scalar maxT = 0;
