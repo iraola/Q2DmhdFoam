@@ -16,7 +16,7 @@ def tagTag(dict):
         return new_dict
 
 
-def replaceDictList(tag_dict, filePath):
+def replaceDictList(tag_dict, filePath, verbose=False):
     """
     Replaces tags in a dictionary 'tag_dict' (tags=keys) present in a given
     file 'filePath' with a list of values in the same dictionary
@@ -26,7 +26,9 @@ def replaceDictList(tag_dict, filePath):
         fileText = f.read()
     for tag in tag_dict:
         if tag in fileText:
-            print('Replacing {} tag in {} file. Value: {}.'.format(tag, filePath, tag_dict[tag]))
+            if verbose:
+                print('Replacing {} tag in {} file. Value: {}.'
+                      .format(tag, filePath, tag_dict[tag]))
             fileText = fileText.replace(tag, str(tag_dict[tag]))
     else:
         with open(filePath, 'w') as (f):
@@ -64,7 +66,7 @@ def lenC2CN(len, N=25, c2c=1.05):
     return (G, cmin, cmax)
 
 
-def lenCminC2C(len, cmin, c2c=1.1, N_ini=2, G_ini=2):
+def lenCminC2C(len, cmin, c2c=1.1, N_ini=2, G_ini=2, verbose=False):
 
     def equations(p):
         N, G = p
@@ -77,9 +79,9 @@ def lenCminC2C(len, cmin, c2c=1.1, N_ini=2, G_ini=2):
         N, G = fsolve(equations, (N_ini, G_ini))
 
     cmax = cmin * G
-    print('N= ' + str(int(N)) + ' (c2c**(N-1)-G)>0.01 = ' + str(c2c ** (N - 1) - G > 0.01))
-    return (
-     int(N), G, cmax)
+    if verbose:
+        print('N= ' + str(int(N)) + ' (c2c**(N-1)-G)>0.01 = ' + str(c2c ** (N - 1) - G > 0.01))
+    return int(N), G, cmax
 
 
 def getLatestTime(myDir):
@@ -87,4 +89,4 @@ def getLatestTime(myDir):
     for filename in os.listdir(myDir):
         if float(filename) > float(latestTime):
             latestTime = filename
-        return latestTime
+    return latestTime

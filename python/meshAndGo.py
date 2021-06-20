@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 import subprocess as sp
 import os
 
-def meshAndGo(Ha, Re, Gr, volumetric_heat=True, write=False, plot=False, **kwargs):
+def meshAndGo(Ha, Re, Gr, volumetric_heat=True, write=False, plot=False,
+                verbose=False, **kwargs):
     '''
     Setup, mesh, run and plot results for a Q2DmhdFOAM case
 
@@ -14,7 +15,8 @@ def meshAndGo(Ha, Re, Gr, volumetric_heat=True, write=False, plot=False, **kwarg
     ----------
 
     '''
-
+    print('\n\nStarting simulation for Ha={}, Re={}, Gr={}\n'
+        .format(Ha, Re, Gr))
     ######################
     ### INITIALIZATIONS
     ######################
@@ -102,9 +104,9 @@ def meshAndGo(Ha, Re, Gr, volumetric_heat=True, write=False, plot=False, **kwarg
     # Tag and print values
     tag_dict['B'] = B
     tag_dict['Ux'] = Ux
-    print('Magnetic field B = {} for Ha = {}'.format(tag_dict['B'],Ha))
-    print('Mean velocity U = {} for Re = {}'.format(tag_dict['Ux'],Re))
-    print('Temperature difference is {} for Grashof = {}'.format(delta_T,Gr))
+    print('Magnetic field is B = {} for Ha = {}'.format(tag_dict['B'], Ha))
+    print('Mean velocity is U = {} for Re = {}'.format(tag_dict['Ux'], Re))
+    print('Temperature difference is {} for Grashof = {}'.format(delta_T, Gr))
 
     ######################
     ### MESH
@@ -121,20 +123,19 @@ def meshAndGo(Ha, Re, Gr, volumetric_heat=True, write=False, plot=False, **kwarg
         l_side = tag_dict['a']/np.sqrt(Ha)
     N_bl = 25
     G_bl, _, cmax = utils.lenC2CN(l_side, N_bl)
-
-    print('Ha = {}'.format(Ha))
-    print('SIDE BOUNDARY LAYER')
-    print('side boundary length = {}'.format(l_side))
-    print('G = {}'.format(G_bl))
-    print('cmax = {}'.format(cmax))
-
     # This is HALF the length of the bulk
     l_bulk = tag_dict['a'] - l_side
     N_bulk, G_bulk, _ = utils.lenCminC2C(l_bulk, cmax)
-    print('HALF BULK')
-    print('bulk half length = {}'.format(l_bulk))
-    print('N = {}'.format(N_bulk))
-    print('G = {}'.format(G_bulk))
+    if verbose:
+        print('Ha = {}'.format(Ha))
+        print('SIDE BOUNDARY LAYER')
+        print('side boundary length = {}'.format(l_side))
+        print('G = {}'.format(G_bl))
+        print('cmax = {}'.format(cmax))
+        print('HALF BULK')
+        print('bulk half length = {}'.format(l_bulk))
+        print('N = {}'.format(N_bulk))
+        print('G = {}'.format(G_bulk))
 
     mesh_dict = {
         'Lx'        : Lx*tag_dict['a'],
