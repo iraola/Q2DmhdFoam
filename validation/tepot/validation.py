@@ -61,7 +61,6 @@ i = 0
 for file in os.listdir(validation_dir):
     # Get dimless numbers from the filenames
     Ha, Re, Gr = getConditions(file)
-    print(Ha, Re, Gr)
 
     # Run case with the meshAndGo module
     meshAndGo(Ha, Re, Gr,

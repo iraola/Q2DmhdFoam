@@ -22,19 +22,19 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         3000;
+endTime         20000;
 
 deltaT          0.005;
 
 writeControl    adjustableRunTime;
 
-writeInterval   25;
+writeInterval   100;
 
 purgeWrite      0;
 
 writeFormat     ascii;
 
-writePrecision  6;
+writePrecision  8;
 
 writeCompression uncompressed;
 
@@ -52,3 +52,5 @@ maxCo           0.5;
 
 
 // ************************************************************************* //
+
+ssCriteria      true;
