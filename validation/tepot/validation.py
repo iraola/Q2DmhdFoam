@@ -61,33 +61,33 @@ i = 0
 for file in os.listdir(validation_dir):
     # Get dimless numbers from the filenames
     Ha, Re, Gr = getConditions(file)
+    if Ha > 100:
+        # Run case with the meshAndGo module
+        meshAndGo(Ha, Re, Gr,
+            mesh_dict=mesh_dict, tag_dict=tag_dict, phys_dict=phys_dict)
+        # Store the simulated case in other directory
+        sp.call("cp -r case case_" + str(Ha) + "_" + str(Gr), shell=True)
 
-    # Run case with the meshAndGo module
-    meshAndGo(Ha, Re, Gr,
-        mesh_dict=mesh_dict, tag_dict=tag_dict, phys_dict=phys_dict)
-    # Store the simulated case in other directory
-    sp.call("cp -r case case_" + str(Ha) + "_" + str(Gr), shell=True)
-
-    # Get latest time directory name and load simulation data
-    latest_time = getLatestTime(postprocess_dir)
-    filename = postprocess_dir + latest_time + '/' + postprocess_file
-    # Plot
-    z, U, _, _ = np.loadtxt(filename, unpack= True)
-    z_val, _, U_val = np.loadtxt(validation_dir + '/' + file, unpack= True)
-    # Normalize data
-    U /= U.mean()
-    z = (z - a) / a
-    U_val /= U_val.mean()
-    U_val = np.flip(U_val)
-    z_val = (z_val - a) / a
-    # Plot simulation data
-    label_q2d = 'Q2D Ha=' + str(Ha) + ' Gr='+str(Gr)
-    ax.plot(z, U, linestyle='-', color=color_q2d[i], label=label_q2d)
-    # Plot validation data
-    label_val = 'tepot Ha=' + str(Ha) + ' Gr='+str(Gr)
-    ax.plot(z_val, U_val, linestyle='--', color=color_val[i], label=label_val)
-    # Update counter
-    i += 1
+        # Get latest time directory name and load simulation data
+        latest_time = getLatestTime(postprocess_dir)
+        filename = postprocess_dir + latest_time + '/' + postprocess_file
+        # Plot
+        z, U, _, _ = np.loadtxt(filename, unpack= True)
+        z_val, _, U_val = np.loadtxt(validation_dir + '/' + file, unpack= True)
+        # Normalize data
+        U /= U.mean()
+        z = (z - a) / a
+        U_val /= U_val.mean()
+        U_val = np.flip(U_val)
+        z_val = (z_val - a) / a
+        # Plot simulation data
+        label_q2d = 'Q2D Ha=' + str(Ha) + ' Gr='+str(Gr)
+        ax.plot(z, U, linestyle='-', color=color_q2d[i], label=label_q2d)
+        # Plot validation data
+        label_val = 'tepot Ha=' + str(Ha) + ' Gr='+str(Gr)
+        ax.plot(z_val, U_val, linestyle='--', color=color_val[i], label=label_val)
+        # Update counter
+        i += 1
 
 
 ax.legend(loc='best')
