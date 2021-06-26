@@ -87,7 +87,7 @@
     vector flowDirection(1.0, 0.0, 0.0);
     if (magUbar.value()>SMALL)
     {
-        vector flowDirection = (Ubar/magUbar).value();
+        flowDirection = (Ubar/magUbar).value();
     }
 
     // Boolean for fully-developed flow selection
