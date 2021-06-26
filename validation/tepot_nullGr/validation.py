@@ -74,7 +74,12 @@ for file in os.listdir(validation_dir):
     filename = postprocess_dir + latest_time + '/' + postprocess_file
     # Plot
     z, U, _, _ = np.loadtxt(filename, unpack= True)
-    z_val, _, U_val = np.loadtxt(validation_dir + '/' + file, unpack= True)
+    # Conditional to allow input sample files with different column formats
+    # (mainly with or without 'theta' field)
+    if np.loadtxt(validation_dir + '/' + file).shape[1] > 2:
+        z_val, _, U_val = np.loadtxt(validation_dir + '/' + file, unpack= True)
+    else:
+        z_val, U_val = np.loadtxt(validation_dir + '/' + file, unpack= True)
     # Normalize data
     # for simulation data
     U /= U.mean()
