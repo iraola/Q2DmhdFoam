@@ -38,9 +38,12 @@ phys_dict = {
     'beta'   : 1.2e-4,
     'sigma'  : 763000}
 mesh_dict = {       # SETUP FOR CYCLIC ONE-CELL CASE
-    'Lx'    : 0.1,
-    'LxHalf': 0.1/2,
-    'Nx'    : 1}
+    'Lx'        : 0.1,
+    'LxHalf'    : 0.1/2,
+    'Nx'        : 1,
+    'c2c_bl'    : 1.05,
+    'c2c_bulk'  : 1.001
+}
 a = tag_dict['a']   # take 'a' length that we'll use later
 
 # Initialize plot
@@ -86,7 +89,6 @@ for file in os.listdir(validation_dir):
     z = (z - a) / a
     # for validation data
     U_val /= U_val.mean()
-    U_val = np.flip(U_val)
     z_val = (z_val - a) / a
     # Plot simulation data
     label_q2d = 'Q2D Ha=' + str(Ha) + ' Gr='+str(Gr)
