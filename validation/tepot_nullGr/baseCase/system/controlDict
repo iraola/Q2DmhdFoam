@@ -46,9 +46,9 @@ runTimeModifiable yes;
 
 adjustTimeStep  yes;
 
-epsSteady       1e-05;
+epsSteady       1e-6;
 
-maxCo           0.5;
+maxCo           0.001;
 
 
 // ************************************************************************* //
