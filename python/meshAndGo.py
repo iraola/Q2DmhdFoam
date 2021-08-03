@@ -89,10 +89,18 @@ def meshAndGo(Ha, Re, Gr, volumetric_heat=True, write=False, plot=False,
 
     # FROM GRASHOF:
     delta_T = Gr * nu**2 / (abs(g) * beta * (2 * a)**3)
+    print('delta_T', delta_T)
     if volumetric_heat:
         # Calculate exponential deposition q0 (tepot case)
+        # - Average heat deposition in W/m3 using Fourier's law
         S0 = delta_T * k / (a**2)
-        q0 = S0 * (2 * a * m) / (1 - np.exp(- 2 * a * m))
+        print('S0', S0)
+        # - Calc. q0 for q = q0 * exp(-m * y) as in iniSourceT
+        #   Using S0 = 1 / (2*a) * integrate(q from -a to a)
+        q0 = 2 * m * S0 / (1 - np.exp(-2 * m))
+        # - Do not divide by rho*cp to go from W/m3 to K/s since Q2DmhdFOAM
+        #   already understands sourceT comes in W/m3 and divides it by
+        #   rho*cp inside the solver
         tag_dict['q0'] = q0
     else:
         # Get hot and cold temperature for walls
