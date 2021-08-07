@@ -32,7 +32,10 @@ phys_dict = {
 mesh_dict = {       # SETUP FOR CYCLIC ONE-CELL CASE
     'Lx'    : 0.1,
     'LxHalf': 0.1/2,
-    'Nx'    : 1}
+    'Nx'    : 1,
+    'c2c_bl'    : 1.05,
+    'c2c_bulk'  : 1.001
+}
 postprocess_dir = 'case/postProcessing/sets/'
 postprocess_file = 'line_centreProfile_U.xy'
 fig, ax = plt.subplots(figsize=(12,6))
@@ -45,7 +48,6 @@ meshAndGo(Ha=0, Re=100, Gr=0, Nx=1, Lx=0.1,
 latest_time = getLatestTime(postprocess_dir)
 filename = postprocess_dir + latest_time + '/' + postprocess_file
 z, u_q2d, _, _ = np.loadtxt(filename, unpack= True)
-ax.plot(z, u_q2d, label='Q2D')
 
 # Solution for the Poiseuille Flow between two infinite plates
 _, _, _, gradP, _, _ = np.loadtxt('case/output.out', unpack= True)
@@ -54,7 +56,10 @@ y = np.linspace(0, h)
 deltaP = gradP[-1]
 mu = phys_dict['rho0']*phys_dict['nu']
 u_val = (deltaP*phys_dict['rho0']) /(2*mu) * y * (h-y)
-ax.plot(y,u_val, label='Poiseuille')
+
+# Plot
+ax.plot(y, u_val, label='Poiseuille')
+ax.plot(z, u_q2d, linestyle='dotted', color='r', linewidth=5, label='Q2D')
 ax.legend(loc='best')
 
 print("Q2DmhdFOAM's mean velocity:", u_q2d.mean())
