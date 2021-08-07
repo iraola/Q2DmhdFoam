@@ -5,6 +5,7 @@ import pandas as pd
 import sys
 import os
 import subprocess as sp
+from sklearn.metrics import mean_squared_error
 import pdb
 # import custom modules
 sys.path.insert(1, '../../python')
@@ -60,6 +61,7 @@ def getConditions(filename):
 ### LOOP
 # Remove old directories present
 sp.call("rm -r -f case_*", shell=True)
+errors = {}
 i = 0
 for file in os.listdir(validation_dir):
     # Get dimless numbers from the filenames
@@ -70,7 +72,7 @@ for file in os.listdir(validation_dir):
     meshAndGo(Ha, Re, Gr,
         mesh_dict=mesh_dict, tag_dict=tag_dict, phys_dict=phys_dict)
     # Store the simulated case in other directory
-    sp.call("cp -r case case_" + str(Ha) + "_" + str(Gr), shell=True)
+    sp.call("mv case case_" + str(Ha) + "_" + str(Gr), shell=True)
 
     # Get latest time directory name and load simulation data
     latest_time = getLatestTime(postprocess_dir)
@@ -96,9 +98,18 @@ for file in os.listdir(validation_dir):
     # Plot validation data
     label_val = 'tepot Ha=' + str(Ha) + ' Gr='+str(Gr)
     ax.plot(z_val, U_val, linestyle='--', color=color_val[i], label=label_val)
+    # Get metric of performance:
+    #   root mean squared error over the normalized velocities
+    rmse = np.sqrt(mean_squared_error(y_true=U_val, y_pred=U))
+    print('Root mean squared error of the normalized velocity is', rmse)
+    errors[i+1] = [Ha, Re, Gr, rmse]
     # Update counter
     i += 1
 
+# Write validation errors file
+pd.DataFrame.from_dict(errors, orient='index',
+                       columns=['Ha', 'Re', 'Gr', 'rmse']).to_csv(
+                       'validation_error_shercliff.csv', index=False)
 
 ax.legend(loc='best')
 fig.savefig('validation_tepot_nullGr.png',format='png',dpi=200)

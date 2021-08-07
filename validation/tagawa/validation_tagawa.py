@@ -177,7 +177,7 @@ for Ha in Ha_list:
     meshAndGo(Ha, Re, Gr, volumetric_heat=False,
         mesh_dict=mesh_dict, tag_dict=tag_dict, phys_dict=phys_dict)
     # Store the simulated case in other directory
-    sp.call("cp -r case case_" + str(Ha), shell=True)
+    sp.call("mv case case_" + str(Ha), shell=True)
     # Get latest time directory name and load simulation data
     latest_time = getLatestTime(postprocess_dir)
     filename = postprocess_dir + latest_time + '/' + postprocess_file
