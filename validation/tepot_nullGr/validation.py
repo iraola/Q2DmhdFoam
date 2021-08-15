@@ -109,6 +109,9 @@ pd.DataFrame.from_dict(errors, orient='index',
                        columns=['Ha', 'Re', 'Gr', 'rmse']).to_csv(
                        'validation_error_shercliff.csv', index=False)
 
+# Plot configuration
+ax.set_ylabel('Normalized velocity, $U/\overline{U}$')
+ax.set_xlabel('Dimensionless channel length, $y/a$')
 ax.legend(loc='best')
 fig.savefig('validation_tepot_nullGr.png',format='png',dpi=200)
 plt.show()
