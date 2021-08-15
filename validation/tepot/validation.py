@@ -71,9 +71,6 @@ for file in os.listdir(validation_dir):
     # Run case with the meshAndGo module
     meshAndGo(Ha, Re, Gr,
         mesh_dict=mesh_dict, tag_dict=tag_dict, phys_dict=phys_dict)
-    # Store the simulated case in other directory
-    sp.call("mv case case_" + str(Ha) + "_" + str(Gr), shell=True)
-
     # Get latest time directory name and load simulation data
     latest_time = getLatestTime(postprocess_dir)
     filename = postprocess_dir + latest_time + '/' + postprocess_file
@@ -96,6 +93,8 @@ for file in os.listdir(validation_dir):
     rmse = np.sqrt(mean_squared_error(y_true=U_val, y_pred=U))
     print('Root mean squared error of the normalized velocity is', rmse)
     errors[i+1] = [Ha, Re, Gr, rmse]
+    # Store the simulated case in other directory
+    sp.call("mv case case_" + str(Ha) + "_" + str(Gr), shell=True)
     # Update counter
     i += 1
 

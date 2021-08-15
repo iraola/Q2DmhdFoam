@@ -65,9 +65,6 @@ for Gr in Grashofs:
     # Run case with the meshAndGo module
     meshAndGo(Ha, Re, Gr,
         mesh_dict=mesh_dict, tag_dict=tag_dict, phys_dict=phys_dict)
-    # Store the simulated case in other directory
-    sp.call("mv case case_" + str(Ha) + "_" + str(Re) + "_" + str(Gr), shell=True)
-
     # Get latest time directory name and load simulation data
     latest_time = getLatestTime(postprocess_dir)
     filename = postprocess_dir + latest_time + '/' + postprocess_file
@@ -90,6 +87,8 @@ for Gr in Grashofs:
     # print('Root mean squared error of the normalized velocity is', rmse)
     # errors[i+1] = [Ha, Re, Gr, rmse]
     # Update counter
+    # Store the simulated case in other directory
+    sp.call("mv case case_" + str(Ha) + "_" + str(Re) + "_" + str(Gr), shell=True)
     i += 1
 
 # # Write validation errors file
