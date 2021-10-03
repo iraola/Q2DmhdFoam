@@ -1,4 +1,5 @@
 import os
+import numpy as np
 from scipy.optimize import fsolve
 
 def tagTag(dict):
@@ -90,3 +91,46 @@ def getLatestTime(myDir):
         if float(filename) > float(latestTime):
             latestTime = filename
     return latestTime
+
+def shercliff_profile(Ha, gradP, nu, a, b, z):
+    ''' Mas de les Valls citation of Ni et al. (2007) corrected solution '''
+
+    from numpy import exp
+    print('\nRunning analytical procedure to calculate Shercliff profile',
+           'for the validation case:\n',
+           'Ha = {}, gradP = {}, nu = {}, a = {}, b = {}, z = {} to {}\n'
+           .format(Ha, gradP, nu, a, b, min(z), max(z)))
+
+    y = 0       # center of the channel, study side boundary layer
+    # Initialization
+    eta = y / a     # dimensionless coordinate along magnetic field lines
+    chi = z / a     # dimensionless coordinate perpendicular to magnetic field lines
+    l = b / a       # aspect ratio
+    db = 0.0        # Hartmann wall conductivity ratio, zero for Shercliff case
+    tol = 1e-21
+    # Loop
+    V = np.zeros(z.shape)
+    V_old = V + 1
+    k = 0
+    iter = 0
+    while abs((V_old - V).mean() / V_old.mean()) > tol:
+        iter += 1
+        V_old = V.copy()
+        alpha = (k + 1 / 2) * np.pi / l
+        N = np.sqrt(Ha**2 + 4 * alpha**2)
+        r1 = 1 / 2 * (Ha + N)
+        r2 = 1 / 2 * (-Ha + N)
+        V2 = ((db * r2 + (1 - exp(-2 * r2)) / (1 + exp(-2 * r2)))
+              * (exp(-r1 * (1 - eta)) + exp(-r1 * (1 + eta))) / 2) \
+             / ((1 + exp(-2 * r1)) / 2 * db * N
+                + (1 + exp(-2 * (r1 + r2))) / (1 + exp(-2 * r2)))
+        V3 = ((db * r1 + (1 - exp(-2 * r1)) / (1 + exp(-2 * r1)))
+              * (exp(-r2 * (1 - eta)) + exp(-r2 * (1 + eta))) / 2) \
+             / ((1 + exp(-2 * r2)) / 2 * db * N
+                + (1 + exp(-2 * (r1 + r2))) / (1 + exp(-2 * r1)))
+        V += (2 * (-1)**k * np.cos(alpha * chi)) / (l * alpha**3) * (1 - V2 - V3)
+        k += 1
+    print('Ran {} iterations'.format(iter))
+    U = nu**-1 * V * gradP * a**2
+    # if U.mean() < 0: U = -U
+    return U
