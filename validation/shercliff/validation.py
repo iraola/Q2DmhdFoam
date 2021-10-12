@@ -52,6 +52,7 @@ b = tag_dict['b']
 nu = phys_dict['nu']
 
 # Initialize plot
+fig_scaled, ax_scaled = plt.subplots(figsize=(12,6))
 fig, ax = plt.subplots(figsize=(12,6))
 
 # Initialize conditions: Q2D laminar conditions according to Smolentsev
@@ -113,7 +114,7 @@ tepot_files = ['lineSampled_theta_Ux_500_500_0',
 # gradP = 1e-5
 # z_val = np.linspace(-0.075, 0.075, 1000) # 'y' in Elisabet's
 # U_val = shercliff_profile(Ha, gradP, nu, a, b, z_val)
-# ax.plot(z_val, U_val, linestyle='--')
+# ax_scaled.plot(z_val, U_val, linestyle='--')
 # print(max(abs(U_val)))
 # #######################
 
@@ -132,42 +133,50 @@ for Ha in Ha_list:
     filename = postprocess_dir + latest_time + '/' + postprocess_file
     # Load simulation data
     z, U, _, _ = np.loadtxt(filename, unpack=True)
-    # Load last value of pressure gradient
-    _, _, _, gradP, _, _ = np.loadtxt('case/output.out', unpack=True)
-    gradP = gradP[-1]
 
-    # Calculate validation data with Shercliff procedure
-    z_val = z - a   # center axis data around zero to run shercliff
-    U_val = shercliff_profile(Ha, gradP, nu, a, b, z_val)
+    # # Load last value of pressure gradient
+    # _, _, _, gradP, _, _ = np.loadtxt('case/output.out', unpack=True)
+    # gradP = gradP[-1]
+    # # Calculate validation data with Shercliff procedure
+    # z_val = z - a   # center axis data around zero to run shercliff
+    # U_val = shercliff_profile(Ha, gradP, nu, a, b, z_val)
+    # # Plot data without normalization
+    # plt.figure()
+    # plt.plot(z, U_val, label='validation')
+    # plt.plot(z, U, label='simulation')
+    # plt.legend(loc='best')
+    # plt.title('Hartmann ' + str(Ha))
+
+    # Plot validation versus simulation data one per run
+    z_val, U_val = np.loadtxt('samples/' + tepot_files[i], unpack=True)
+    plt.figure()
+    plt.plot(z, U, label='Q2D')
+    plt.plot(z_val, U_val, label='validation')
+    plt.legend(loc='best')
+    plt.title('Hartmann ' + str(Ha))
 
     # Show absolute values before normalization
     print('Simulation max. velocity is', U.max())
     print('Validation max. velocity is', U_val.max())
 
-    # Plot data without normalization
-    plt.figure()
-    plt.plot(z, U_val, label='validation')
-    plt.plot(z, U, label='simulation')
-    plt.legend(loc='best')
-    # Plot validation versus tepot data to check
-    z_tepot, U_tepot = np.loadtxt('../tepot_nullGr/samples/' + tepot_files[i], unpack=True)
-    plt.figure()
-    plt.plot(z, U_val, label='validation')
-    plt.plot(z_tepot, U_tepot, label='tepot')
-    plt.legend(loc='best')
+    # General big plotting
+    # Prepare labels
+    label_q2d = 'Q2D Ha=' + str(Ha) + ' Gr='+str(Gr)
+    label_val = 'Analytical Ha=' + str(Ha) + ' Gr='+str(Gr)
+    # Plot unscaled data
+    ax.plot(z, U, linestyle='-', color=color_q2d[i], label=label_q2d)
+    ax.plot(z_val, U_val, linestyle='--', color=color_val[i], label=label_val)
 
     # Normalize data
     #  for simulation data
-    U /= U.mean()
-    z = (z - a) / a
+    U_scaled = U / U.mean()
+    z_scaled = (z - a) / a
     #  for validation data
-    U_val /= U_val.mean()
-    # Plot simulation data
-    label_q2d = 'Q2D Ha=' + str(Ha) + ' Gr='+str(Gr)
-    ax.plot(z, U, linestyle='-', color=color_q2d[i], label=label_q2d)
-    # Plot validation data
-    label_val = 'tepot Ha=' + str(Ha) + ' Gr='+str(Gr)
-    ax.plot(z, U_val, linestyle='--', color=color_val[i], label=label_val)
+    U_val_scaled = U_val / U_val.mean()
+    z_val_scaled = (z_val - a) / a
+    # Plot scaled data
+    ax_scaled.plot(z_scaled, U_scaled, linestyle='-', color=color_q2d[i], label=label_q2d)
+    ax_scaled.plot(z_val_scaled, U_val_scaled, linestyle='--', color=color_val[i], label=label_val)
 
     # Get metric of performance:
     #   root mean squared error over the normalized velocities
@@ -185,8 +194,13 @@ pd.DataFrame.from_dict(errors, orient='index',
                        'validation_error_shercliff.csv', index=False)
 
 # Plot configuration
-ax.set_ylabel('Normalized velocity, $U/\overline{U}$')
-ax.set_xlabel('Dimensionless channel length, $y/a$')
+ax_scaled.set_ylabel('Normalized velocity, $U/\overline{U}$')
+ax_scaled.set_xlabel('Dimensionless channel length, $y/a$')
+ax_scaled.legend(loc='best')
+fig_scaled.savefig('validation_shercliff_scaled.png', format='png',dpi=200)
+
+ax.set_ylabel('Velocity, $U$')
+ax.set_xlabel('Channel length, $y$')
 ax.legend(loc='best')
-fig.savefig('validation_tepot_nullGr.png',format='png',dpi=200)
+fig.savefig('validation_shercliff.png', format='png',dpi=200)
 plt.show()
