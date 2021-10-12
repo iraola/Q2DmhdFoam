@@ -149,7 +149,7 @@ tag_dict = {
     'g'   : -9.81}
 phys_dict = {
     'rho0'   : 9720,
-    'nu'     : 1.54e-7,
+    'nu'     : 1.5401234567901237e-07,
     'Cp'     : 189,
     'k'      : 22.36,
     'beta'   : 1.2e-4,
@@ -157,7 +157,9 @@ phys_dict = {
 mesh_dict = {
     'Lx'    : 30,   # x200 times the '2a' length = 200*0.075*2
     'LxHalf': 30/2,
-    'Nx'    : 100}
+    'Nx'    : 100,
+    'c2c_bl'    : 1.05,
+    'c2c_bulk'  : 1.001}
 # Read validation data
 Re = 0
 Gr = 1e4
@@ -174,10 +176,10 @@ fig1, ax1 = plt.subplots(figsize=(12,6))
 maxW_q2d = np.zeros(len(Ha_list))
 i = 0
 for Ha in Ha_list:
-    meshAndGo(Ha, Re, Gr, volumetric_heat=False,
+    # CAREFUL! USE Ha/2 BECAUSE OF TAGAWA'S DEFINITION OF Ha DIFFERENT THAN THE
+    # STANDARD
+    meshAndGo(Ha/2, Re, Gr, volumetric_heat=False,
         mesh_dict=mesh_dict, tag_dict=tag_dict, phys_dict=phys_dict)
-    # Store the simulated case in other directory
-    sp.call("mv case case_" + str(Ha), shell=True)
     # Get latest time directory name and load simulation data
     latest_time = getLatestTime(postprocess_dir)
     filename = postprocess_dir + latest_time + '/' + postprocess_file
@@ -190,9 +192,12 @@ for Ha in Ha_list:
     maxW_q2d[i] = np.max(W)
     print('\nMaximum dimensionless velocity: ' + str(maxW_q2d[i]) + '\n' )
     # Plot simulation profile
-    ax1.plot(z, W, label='Q2D Ha='+str(Gr))
+    ax1.plot(z, W, label='Q2D Ha='+str(Ha))
+    # Store the simulated case in other directory
+    sp.call("mv case case_" + str(Ha), shell=True)
     i += 1
 ax1.legend(loc='best')
+fig1.savefig('validation_tagawa_profiles.png', format='png', dpi=300)
 
 # PLOT
 plot_plot(maxW_th, maxW_q2d, x=Ha_list,

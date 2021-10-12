@@ -34,21 +34,22 @@ purgeWrite      0;
 
 writeFormat     ascii;
 
-writePrecision  8;
+writePrecision  12;
 
 writeCompression uncompressed;
 
 timeFormat      general;
 
-timePrecision   6;
+timePrecision   10;
 
 runTimeModifiable yes;
 
 adjustTimeStep  yes;
 
-maxCo           0.5;
+maxCo           0.001;
 
-epsSteady       1e-5;
+epsSteady       1e-8;
 
+ssCriteria      true;
 
 // ************************************************************************* //
