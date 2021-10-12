@@ -82,7 +82,7 @@ def meshAndGo(Ha, Re, Gr, volumetric_heat=True, write=False, plot=False,
     # Calculations from the parametrization of the problem and assign
     # them to the dictionaries
     # FROM HARTMANN:
-    B = Ha / a * np.sqrt(nu * rho / sigma)
+    B = Ha / b * np.sqrt(nu * rho / sigma)
 
     # FROM REYNOLDS:
     Ux = Re * nu / a
