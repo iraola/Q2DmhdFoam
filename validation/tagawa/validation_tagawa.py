@@ -82,7 +82,7 @@ def plot_plot(values1, values2, x, labels, **kwargs):
         ax.set_xlabel(kwargs['xlabel'])
     if 'ylim_min' in kwargs:
         ax.set_ylim(ymin=kwargs['ylim_min'])
-    fig.savefig('validation_tagawa.png',format='png',dpi=1000)
+    fig.savefig('validation_tagawa.png',format='png',dpi=300)
     plt.show()
 
 def validation_tepot_AR(Ha, Re, Gr, AR_list):
