@@ -56,14 +56,14 @@ fig_scaled, ax_scaled = plt.subplots(figsize=(12,6))
 fig, ax = plt.subplots(figsize=(12,6))
 
 # Initialize conditions: Q2D laminar conditions according to Smolentsev
-Ha_list = [500, 2000, 5000]
+Ha_list = [250, 1000, 2500]
 Re = 500
 Gr = 0.0
 
 # tepot check
-tepot_files = ['lineSampled_theta_Ux_500_500_0',
-               'lineSampled_theta_Ux_2000_500_0',
-               'lineSampled_theta_Ux_5000_500_0']
+tepot_files = ['lineSampled_theta_Ux_250_500_0',
+               'lineSampled_theta_Ux_1000_500_0',
+               'lineSampled_theta_Ux_2500_500_0']
 
 # FUNCTIONS
 # def shercliff_profile(Ha, gradP, nu, a, b, z):
@@ -197,10 +197,10 @@ pd.DataFrame.from_dict(errors, orient='index',
 ax_scaled.set_ylabel('Normalized velocity, $U/\overline{U}$')
 ax_scaled.set_xlabel('Dimensionless channel length, $y/a$')
 ax_scaled.legend(loc='best')
-fig_scaled.savefig('validation_shercliff_scaled.png', format='png',dpi=200)
+fig_scaled.savefig('validation_shercliff_scaled.png', format='png',dpi=300)
 
-ax.set_ylabel('Velocity, $U$')
-ax.set_xlabel('Channel length, $y$')
+ax.set_ylabel('Velocity (m/s)')
+ax.set_xlabel('Channel length (m)')
 ax.legend(loc='best')
-fig.savefig('validation_shercliff.png', format='png',dpi=200)
+fig.savefig('validation_shercliff.png', format='png',dpi=300)
 plt.show()
