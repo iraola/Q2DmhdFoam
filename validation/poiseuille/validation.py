@@ -38,7 +38,7 @@ mesh_dict = {       # SETUP FOR CYCLIC ONE-CELL CASE
 }
 postprocess_dir = 'case/postProcessing/sets/'
 postprocess_file = 'line_centreProfile_U.xy'
-fig, ax = plt.subplots(figsize=(12,6))
+fig, ax = plt.subplots(figsize=(12,14))
 
 # Run case
 meshAndGo(Ha=0, Re=100, Gr=0, Nx=1, Lx=0.1,
@@ -59,10 +59,12 @@ u_val = (deltaP*phys_dict['rho0']) /(2*mu) * y * (h-y)
 
 # Plot
 ax.plot(y, u_val, label='Poiseuille')
-ax.plot(z, u_q2d, linestyle='dotted', color='r', linewidth=5, label='Q2D')
+ax.plot(z, u_q2d, linestyle='dotted', color='r', linewidth=3, label='Q2D')
+ax.set_ylabel('Velocity (m/s)')
+ax.set_xlabel('Channel length (m)')
 ax.legend(loc='best')
 
 print("Q2DmhdFOAM's mean velocity:", u_q2d.mean())
 print("Poiseuille's mean velocity:", u_val.mean())
-fig.savefig('validation_poiseuille.png',format='png',dpi=200)
+fig.savefig('validation_poiseuille.png',format='png',dpi=100)
 plt.show()
