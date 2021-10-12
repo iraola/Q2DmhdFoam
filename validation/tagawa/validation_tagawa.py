@@ -72,6 +72,14 @@ def plot_plot(values1, values2, x, labels, **kwargs):
     values2 = np.array(values2)
     rel_error = abs((values1-values2)/values1)*100
 
+    # Dataframe to print
+    dict_df = {
+        labels[0] : values1,
+        labels[1] : values2,
+        'rel_error' : rel_error
+    }
+    pd.DataFrame(dict_df).to_csv('validation_tagawa.csv')
+
     fig, ax = plt.subplots(figsize=(12,12))
     ax.plot(x, values1, color = 'b', label=labels[0])
     ax.plot(x, values2, color = 'g', label=labels[1])
