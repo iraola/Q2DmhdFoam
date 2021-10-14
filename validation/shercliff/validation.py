@@ -196,11 +196,13 @@ pd.DataFrame.from_dict(errors, orient='index',
 # Plot configuration
 ax_scaled.set_ylabel('Normalized velocity, $U/\overline{U}$')
 ax_scaled.set_xlabel('Dimensionless channel length, $y/a$')
+ax_scaled.grid(True)
 ax_scaled.legend(loc='best')
 fig_scaled.savefig('validation_shercliff_scaled.png', format='png',dpi=300)
 
 ax.set_ylabel('Velocity (m/s)')
 ax.set_xlabel('Channel length (m)')
+ax.grid(True)
 ax.legend(loc='best')
 fig.savefig('validation_shercliff.png', format='png',dpi=300)
 plt.show()

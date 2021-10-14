@@ -90,6 +90,7 @@ def plot_plot(values1, values2, x, labels, **kwargs):
         ax.set_xlabel(kwargs['xlabel'])
     if 'ylim_min' in kwargs:
         ax.set_ylim(ymin=kwargs['ylim_min'])
+    ax.grid(True)
     fig.savefig('validation_tagawa.png',format='png',dpi=300)
     plt.show()
 
@@ -205,6 +206,7 @@ for Ha in Ha_list:
     sp.call("mv case case_" + str(Ha), shell=True)
     i += 1
 ax1.legend(loc='best')
+ax1.grid(True)
 fig1.savefig('validation_tagawa_profiles.png', format='png', dpi=300)
 
 # PLOT

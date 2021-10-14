@@ -60,11 +60,12 @@ u_val = (deltaP*phys_dict['rho0']) /(2*mu) * y * (h-y)
 # Plot
 ax.plot(y, u_val, label='Poiseuille')
 ax.plot(z, u_q2d, linestyle='dotted', color='r', linewidth=3, label='Q2D')
+ax.grid(True)
 ax.set_ylabel('Velocity (m/s)')
 ax.set_xlabel('Channel length (m)')
 ax.legend(loc='best')
 
 print("Q2DmhdFOAM's mean velocity:", u_q2d.mean())
 print("Poiseuille's mean velocity:", u_val.mean())
-fig.savefig('validation_poiseuille.png',format='png',dpi=100)
+fig.savefig('validation_poiseuille.png',format='png',dpi=300)
 plt.show()

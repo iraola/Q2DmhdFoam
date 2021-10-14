@@ -104,5 +104,6 @@ pd.DataFrame.from_dict(errors, orient='index',
                        'validation_error_tepot.csv', index=False)
 
 ax.legend(loc='best')
-fig.savefig('validation_tepot.png',format='png',dpi=200)
+ax.grid(True)
+fig.savefig('validation_tepot.png',format='png',dpi=300)
 plt.show()
