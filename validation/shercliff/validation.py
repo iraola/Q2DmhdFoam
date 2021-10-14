@@ -180,7 +180,7 @@ for Ha in Ha_list:
 
     # Get metric of performance:
     #   root mean squared error over the normalized velocities
-    rmse = np.sqrt(mean_squared_error(y_true=U_val, y_pred=U))
+    rmse = np.sqrt(mean_squared_error(y_true=U_val_scaled, y_pred=U_scaled))
     print('Root mean squared error of the normalized velocity is', rmse)
     errors[i+1] = [Ha, Re, Gr, rmse]
     # Store the simulated case in other directory
