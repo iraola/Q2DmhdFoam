@@ -50,6 +50,7 @@ mesh_dict = {       # SETUP FOR CYCLIC ONE-CELL CASE
 a = tag_dict['a']   # take 'a' length that we'll use later
 
 # Initialize plot
+fig_scaled, ax_scaled = plt.subplots(figsize=(12,6))
 fig, ax = plt.subplots(figsize=(12,6))
 
 def getConditions(filename):
@@ -68,29 +69,38 @@ i = 0
 for file in os.listdir(validation_dir):
     # Get dimless numbers from the filenames
     Ha, Re, Gr = getConditions(file)
+    print('\nHa={}, Re={}, Gr={}'.format(Ha, Re, Gr))
+
     # Run case with the meshAndGo module
-    meshAndGo(Ha, Re, Gr,
-        mesh_dict=mesh_dict, tag_dict=tag_dict, phys_dict=phys_dict)
+    meshAndGo(Ha, Re, Gr, mesh_dict=mesh_dict, tag_dict=tag_dict,
+	      phys_dict=phys_dict)
+
     # Get latest time directory name and load simulation data
     latest_time = getLatestTime(postprocess_dir)
     filename = postprocess_dir + latest_time + '/' + postprocess_file
-    # Plot
     z, U, _, _ = np.loadtxt(filename, unpack= True)
     z_val, _, U_val = np.loadtxt(validation_dir + '/' + file, unpack= True)
-    # Normalize data
-    U /= U.mean()
-    z = (z - a) / a
-    U_val /= U_val.mean()
-    z_val = (z_val - a) / a
-    # Plot simulation data
     label_q2d = 'Q2D Ha=' + str(Ha) + ' Gr='+str(Gr)
+    label_val = 'Analytical Ha=' + str(Ha) + ' Gr='+str(Gr)
+
+    # Plot unscaled data
     ax.plot(z, U, linestyle='-', color=color_q2d[i], label=label_q2d)
-    # Plot validation data
-    label_val = 'tepot Ha=' + str(Ha) + ' Gr='+str(Gr)
     ax.plot(z_val, U_val, linestyle='--', color=color_val[i], label=label_val)
+
+    # Normalize data
+    #  for simulation data
+    U_scaled = U / U.mean()
+    z_scaled = (z - a) / a
+    #  for validation data
+    U_val_scaled = U_val / U_val.mean()
+    z_val_scaled = (z_val - a) / a
+    # Plot scaled data
+    ax_scaled.plot(z_scaled, U_scaled, linestyle='-', color=color_q2d[i], label=label_q2d)
+    ax_scaled.plot(z_val_scaled, U_val_scaled, linestyle='--', color=color_val[i], label=label_val)
+
     # Get metric of performance:
     #   root mean squared error over the normalized velocities
-    rmse = np.sqrt(mean_squared_error(y_true=U_val, y_pred=U))
+    rmse = np.sqrt(mean_squared_error(y_true=U_val_scaled, y_pred=U_scaled))
     print('Root mean squared error of the normalized velocity is', rmse)
     errors[i+1] = [Ha, Re, Gr, rmse]
     # Store the simulated case in other directory
@@ -103,7 +113,16 @@ pd.DataFrame.from_dict(errors, orient='index',
                        columns=['Ha', 'Re', 'Gr', 'rmse']).to_csv(
                        'validation_error_tepot.csv', index=False)
 
-ax.legend(loc='best')
+# Plot configuration
+ax_scaled.set_ylabel('Normalized velocity, $U/\overline{U}$')
+ax_scaled.set_xlabel('Dimensionless channel length, $y/a$')
+ax_scaled.grid(True)
+ax_scaled.legend(loc='best')
+fig_scaled.savefig('validation_tepot_scaled.png', format='png',dpi=300)
+
+ax.set_ylabel('Velocity (m/s)')
+ax.set_xlabel('Channel length (m)')
 ax.grid(True)
-fig.savefig('validation_tepot.png',format='png',dpi=300)
+ax.legend(loc='best')
+fig.savefig('validation_tepot.png', format='png',dpi=300)
 plt.show()
