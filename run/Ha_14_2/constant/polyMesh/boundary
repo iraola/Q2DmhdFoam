@@ -1,0 +1,166 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  4.1                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       polyBoundaryMesh;
+    location    "constant/polyMesh";
+    object      boundary;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+24
+(
+    xinlet
+    {
+        type            patch;
+        nFaces          5940;
+        startFace       3505840;
+    }
+    xoutlet
+    {
+        type            patch;
+        nFaces          5940;
+        startFace       3511780;
+    }
+    sideWalls
+    {
+        type            patch;
+        nFaces          26400;
+        startFace       3517720;
+    }
+    hartmannWalls
+    {
+        type            patch;
+        nFaces          35800;
+        startFace       3544120;
+    }
+    cleft
+    {
+        type            patch;
+        nFaces          660;
+        startFace       3579920;
+    }
+    cright
+    {
+        type            patch;
+        nFaces          660;
+        startFace       3580580;
+    }
+    cinlet
+    {
+        type            patch;
+        nFaces          660;
+        startFace       3581240;
+    }
+    coutlet
+    {
+        type            patch;
+        nFaces          660;
+        startFace       3581900;
+    }
+    iil_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    iol_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    oil_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    ool_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    iir_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    ior_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    oir_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    oor_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    rri_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    rli_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    lri_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    lli_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    rro_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    rlo_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    lro_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+    llo_inter
+    {
+        type            patch;
+        nFaces          0;
+        startFace       3582560;
+    }
+)
+
+// ************************************************************************* //

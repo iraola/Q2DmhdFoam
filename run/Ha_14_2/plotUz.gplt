@@ -1,0 +1,47 @@
+te  = '450000'
+te2 = ''
+b   = 0.2
+v0  = 0.00021866
+set output 'UzPlot.ps'
+
+
+#set yrange [-0.1:0.1]
+set xrange [400:550]
+
+
+set term post color "Helvetica" 11
+set pointsize 0.8
+#set term png enhanced font "/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf"
+#set termopt enhanced
+#set logscale y 10
+set format y "%g"
+set xlabel "t/(b/v0)"
+set ylabel "Uz/v0"
+set title 'Uz evolution case: benchmark case. B in z-dir from t=490'
+#set pointsize 0.5
+
+#
+# reset linetypes to base dash patterns
+#
+set for [i=1:6] linetype i dt i
+
+#
+# define line styles using explicit rgbcolor names
+#
+set style line 1 lt 2 lc rgb "red" lw 3
+set style line 2 lt 2 lc rgb "orange" lw 3
+set style line 3 lt 2 lc rgb "blue" lw 3
+set style line 4 lt 1 lc rgb "green" lw 3
+set style line 5 lt 1 lc rgb "black" lw 3
+set style line 6 lt 2 lc rgb "brown" lw 3
+
+
+set grid
+
+
+set key inside t r
+plot 'postProcessing/probes/'.te.'/U'.te2.'' using ($1/(b/v0)):($4/v0)  with line ls 5 title "0.2D",\
+     'postProcessing/probes/'.te.'/U'.te2.'' using ($1/(b/v0)):($7/v0)  with line ls 4 title "0.7D",\
+     'postProcessing/probes/'.te.'/U'.te2.'' using ($1/(b/v0)):($10/v0)  with line ls 3 title "1.2D"     
+
+#

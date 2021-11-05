@@ -1,0 +1,59 @@
+#!/bin/sh
+cd ${0%/*} || exit 1    # run from this directory
+
+
+## ALLCLEAN LA SIMULACIO PREVIA
+#/bin/bash ./Allclean
+
+control=system/controlDict
+
+## Source tutorial run functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+application=`getApplication`
+
+
+rm logs/blockMeshLog
+rm logs/stitchMeshLog
+rm logs/createPatchLog
+
+
+echo "Copiem constant/polyMesh.org a constant/polyMesh... "
+rm -r constant/polyMesh
+m4 constant/polyMesh.org/m4toBM.m4 > constant/polyMesh.org/blockMeshDict
+mkdir constant/polyMesh
+cp constant/polyMesh.org/blockMeshDict constant/polyMesh/blockMeshDict
+
+echo "Fem BlockMesh... "
+blockMesh > logs/blockMeshLog
+
+echo "Fem sitchMesh "   #i actualitzem polyMesh... "
+stitchMesh -perfect -overwrite iil_inter iol_inter > logs/stitchMeshLog_il
+stitchMesh -perfect -overwrite oil_inter ool_inter > logs/stitchMeshLog_ol
+stitchMesh -perfect -overwrite iir_inter ior_inter > logs/stitchMeshLog_ir
+stitchMesh -perfect -overwrite oir_inter oor_inter > logs/stitchMeshLog_or
+
+stitchMesh -perfect -overwrite rri_inter rli_inter > logs/stitchMeshLog_irp
+stitchMesh -perfect -overwrite lri_inter lli_inter > logs/stitchMeshLog_ilp
+stitchMesh -perfect -overwrite rro_inter rlo_inter > logs/stitchMeshLog_orp
+stitchMesh -perfect -overwrite lro_inter llo_inter > logs/stitchMeshLog_olp
+
+
+
+
+#rm -r constant/polyMesh
+#cp -r 0.15/polyMesh constant/polyMesh
+#rm -r 0.15
+
+
+#echo "Fem createPatch i actualitzem polyMesh... "
+#createPatch > logs/createPatchLog
+#rm -r constant/polyMesh
+#cp -r 0.15/polyMesh constant/polyMesh
+#rm -r 0.15
+
+
+
+
+
+
+
