@@ -28,20 +28,21 @@ boundaryField
     }
     xoutlet
     {
-        type            advective;
+        //type            advective;
+        type            inletOutlet;
         value           uniform (0.00021866 0 0);
-	inletOutlet	false;
-	correctSupercritical false;
+        inletValue           uniform (0 0 0);
+	    //inletOutlet	    true;
+    	//correctSupercritical false;
     }
     sideWalls
     {
         type            fixedValue;
-	value		uniform (0 0 0);
+    	value		    uniform (0 0 0);
     }
     hartmannWalls
     {
-        type            fixedValue;
-	value		uniform (0 0 0);
+        type            empty;
     }
     cylinder
     {

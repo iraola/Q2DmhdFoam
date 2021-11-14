@@ -17,7 +17,7 @@ FoamFile
 
 dimensions      [1 0 -2 0 0 -1 0];
 
-internalField   uniform 0.0037070;    //  0.0016525);
+internalField   uniform 0;  //0.0037070;  
 
 boundaryField
 {
@@ -35,7 +35,7 @@ boundaryField
     }
     hartmannWalls
     {
-        type            zeroGradient;
+        type            empty;
     }
     cylinder
     {

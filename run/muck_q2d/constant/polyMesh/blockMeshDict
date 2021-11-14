@@ -241,7 +241,7 @@ FoamFile
 
     )
 
-    patch hartmannWalls
+    empty hartmannWalls
     (
     (3   7    6    2)
     (2   6    11    9)

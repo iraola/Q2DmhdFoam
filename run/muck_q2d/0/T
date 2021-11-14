@@ -35,7 +35,7 @@ boundaryField
     }
     hartmannWalls
     {
-        type            zeroGradient;
+        type            empty;
     }
     cylinder
     {

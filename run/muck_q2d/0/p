@@ -23,12 +23,12 @@ boundaryField
 {
     xinlet
     {
-        type            zeroGradient;
+        type            fixedValue;
+        value       	uniform 0;
     }
     xoutlet
     {
-        type            fixedValue;
-        value       	uniform 0;
+        type            zeroGradient;
     }
     sideWalls
     {
@@ -36,7 +36,7 @@ boundaryField
     }
     hartmannWalls
     {
-        type            zeroGradient;
+        type            empty;
     }
     cylinder
     {

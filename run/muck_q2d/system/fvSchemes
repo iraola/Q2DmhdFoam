@@ -19,7 +19,7 @@ FoamFile
 
 ddtSchemes
 {
-  default         CrankNicolson 0.5;
+  default         Euler;
 }
 
 gradSchemes
@@ -31,7 +31,7 @@ gradSchemes
 divSchemes
 {
     default                   	Gauss linear;			// REFINAT:	Gauss linearUpwind default;
-//    div(phi,U)                Gauss linearUpwind grad(U);	// METODE REFINAT: es descomenta aquest.
+    div(phi,U)                  Gauss linearUpwind grad(U);	// METODE REFINAT: es descomenta aquest.
 /*    div(j)                    Gauss linear;*/
 /*    div(volIntegrate(jn))     Gauss linear;*/
 /*    div(phi,T)                Gauss linear;*/
