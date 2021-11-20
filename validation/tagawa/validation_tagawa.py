@@ -201,7 +201,8 @@ for Ha in Ha_list:
     maxW_q2d[i] = np.max(W)
     print('\nMaximum dimensionless velocity: ' + str(maxW_q2d[i]) + '\n' )
     # Plot simulation profile
-    ax1.plot(z, W, label='Q2D Ha='+str(Ha))
+    if Ha > 0:
+        ax1.plot(z, W, label='Q2D Ha='+str(Ha))
     # Store the simulated case in other directory
     sp.call("mv case case_" + str(Ha), shell=True)
     i += 1
