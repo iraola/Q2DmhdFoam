@@ -1,0 +1,10 @@
+#!/bin/sh
+cd ${0%/*} || exit 1    # run from this directory
+ffile="$1"
+for run in {1..3}
+do
+    sed -si 's/(//' $ffile
+    sed -si 's/)//' $ffile
+done
+
+
