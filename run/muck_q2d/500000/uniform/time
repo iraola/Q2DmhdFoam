@@ -10,44 +10,16 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      fvSolution;
+    location    "500000/uniform";
+    object      time;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-solvers
-{
-    p
-    {
-        solver          PCG;
-        preconditioner  DIC;
-        tolerance       1e-10;
-        relTol          1e-2;
-    }
+index           50000;
 
-    U
-    {
-        solver          BiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-10;
-        relTol          0;
-    }
+deltaT          10;
 
-    T
-    {
-        solver          BiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-6;
-        relTol          0;
-    }
-}
-
-PISO
-{
-    nCorrectors     2;
-    nNonOrthogonalCorrectors 0;
-    pRefCell        0;
-    pRefValue       0;
-}
+deltaT0         10;
 
 
 // ************************************************************************* //
