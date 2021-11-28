@@ -1,8 +1,8 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
-| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  2.4.0                                 |
-|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     4.1                                |
+|   \\  /    A nd           | Web:         http://www.foam-extend.org         |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 FoamFile
@@ -10,29 +10,31 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    location    "0";
-    object      p;
+    location    "500000";
+    object      rho;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 2 -2 0 0 0 0];
+dimensions      [1 -3 0 0 0 0 0];
 
-internalField   uniform 0;
+internalField   uniform 9838.6622;
 
 boundaryField
 {
-    xoutlet
-    {
-        type            zeroGradient;
-    }
     xinlet
     {
-        type            fixedValue;
-        value       	uniform 0;
+        type            calculated;
+        value           uniform 9838.6622;
+    }
+    xoutlet
+    {
+        type            calculated;
+        value           uniform 9838.6622;
     }
     sideWalls
     {
-        type            zeroGradient;
+        type            calculated;
+        value           uniform 9838.6622;
     }
     hartmannWalls
     {
@@ -40,7 +42,8 @@ boundaryField
     }
     cylinder
     {
-        type            zeroGradient;
+        type            calculated;
+        value           uniform 9838.6622;
     }
 }
 
