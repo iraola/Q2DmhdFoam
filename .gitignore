@@ -7,3 +7,5 @@ neighbour
 owner
 points
 [1-9]*
+*.OpenFOAM
+*.out
