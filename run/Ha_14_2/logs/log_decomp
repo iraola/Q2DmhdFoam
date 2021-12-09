@@ -1,0 +1,126 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : 2.3.0-f5222ca19ce6
+Exec   : /home/localsoft/OpenFOAM/OpenFOAM-2.3.0/platforms/linux64GccDPOpt/bin/decomposePar -case /home/e4928/OpenFOAM/e4928-2.3.0/run/benchmarking/Ha_14_2 -latestTime
+Date   : Jul 17 2017
+Time   : 10:10:04
+Host   : "eul0301.ciemat.es"
+PID    : 13046
+Case   : /home/e4928/OpenFOAM/e4928-2.3.0/run/benchmarking/Ha_14_2
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster
+allowSystemOperations : Disallowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+
+
+Decomposing mesh region0
+
+Create mesh
+
+Calculating distribution of cells
+Selecting decompositionMethod scotch
+
+Finished decomposition in 6.38 s
+
+Calculating original mesh data
+
+Distributing cells to processors
+
+Distributing faces to processors
+
+Distributing points to processors
+
+Constructing processor meshes
+
+Processor 0
+    Number of cells = 146256
+    Number of faces shared with processor 1 = 6336
+    Number of faces shared with processor 3 = 6336
+    Number of processor patches = 2
+    Number of processor faces = 12672
+    Number of boundary faces = 7864
+
+Processor 1
+    Number of cells = 147972
+    Number of faces shared with processor 0 = 6336
+    Number of faces shared with processor 4 = 6270
+    Number of processor patches = 2
+    Number of processor faces = 12606
+    Number of boundary faces = 8114
+
+Processor 2
+    Number of cells = 148500
+    Number of faces shared with processor 3 = 5940
+    Number of processor patches = 1
+    Number of processor faces = 5940
+    Number of boundary faces = 13740
+
+Processor 3
+    Number of cells = 148632
+    Number of faces shared with processor 0 = 6336
+    Number of faces shared with processor 2 = 5940
+    Number of processor patches = 2
+    Number of processor faces = 12276
+    Number of boundary faces = 7540
+
+Processor 4
+    Number of cells = 148678
+    Number of faces shared with processor 1 = 6270
+    Number of faces shared with processor 5 = 6082
+    Number of processor patches = 2
+    Number of processor faces = 12352
+    Number of boundary faces = 7540
+
+Processor 5
+    Number of cells = 146237
+    Number of faces shared with processor 4 = 6082
+    Number of faces shared with processor 6 = 2876
+    Number of faces shared with processor 7 = 2640
+    Number of processor patches = 3
+    Number of processor faces = 11598
+    Number of boundary faces = 9958
+
+Processor 6
+    Number of cells = 148463
+    Number of faces shared with processor 5 = 2876
+    Number of faces shared with processor 7 = 3804
+    Number of processor patches = 2
+    Number of processor faces = 6680
+    Number of boundary faces = 10938
+
+Processor 7
+    Number of cells = 146662
+    Number of faces shared with processor 5 = 2640
+    Number of faces shared with processor 6 = 3804
+    Number of processor patches = 2
+    Number of processor faces = 6444
+    Number of boundary faces = 11026
+
+Number of processor faces = 40284
+Max number of cells = 148678 (0.6791941764% above average 147675)
+Max number of processor patches = 3 (50% above average 2)
+Max number of faces between processors = 12672 (25.82663092% above average 10071)
+
+Time = 450000
+Detected additional non-decomposed files in "/home/e4928/OpenFOAM/e4928-2.3.0/run/benchmarking/Ha_14_2/450000/uniform"
+
+Processor 0: field transfer
+Processor 1: field transfer
+Processor 2: field transfer
+Processor 3: field transfer
+Processor 4: field transfer
+Processor 5: field transfer
+Processor 6: field transfer
+Processor 7: field transfer
+
+End.
+

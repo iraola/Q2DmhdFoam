@@ -1,0 +1,47 @@
+/*-------------------------------*- C++ -*---------------------------------*\
+|    =========                                                              |
+|    \\      /     OpenFOAM  1.4.1                                          |
+|     \\    /                                                               |
+|      \\  /       The Open Source CFD Toolbox                              |
+|       \\/                                        http://www.OpenFOAM.org  |
+\*-------------------------------------------------------------------------*/
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+    class           dictionary;
+    location        system;
+    object          bernoulliDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+
+patchNameIN    zinlet;
+
+patchNameOUT   zoutlet;
+
+patchNameCHOUT1     choutlet1;
+
+patchNameCHOUT2     choutlet2;
+
+patchNameCHOUT3     choutlet3;
+
+patchNameCHOUT4     choutlet4;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

@@ -1,0 +1,142 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.3                                   |
+|   \\  /    A nd           | Web:      http://www.openfoam.org               |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+
+    root            "";
+    case            "";
+    instance        "";
+    local           "";
+
+    class           dictionary;
+    object          fvSolution;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    pd
+    {
+       	solver      		GAMG;
+       	smoother	    	GaussSeidel;
+       	minIter         	3;
+       	maxIter         	100;
+       	tolerance       	1e-7;//4
+       	relTol          	0.05;
+	    nPreSweeps		    0;
+	    nPostSweeps		    2;
+	    cacheAgglomeration	on;
+	    agglomerator		faceAreaPair;
+	    nCellsInCoarsestLevel	1000;
+	    mergeLevels		    1;
+    };
+
+    pdFinal
+    {
+      	solver      		GAMG;
+       	smoother	    	GaussSeidel;
+       	minIter         	3;
+       	maxIter         	1000;
+       	tolerance       	1e-6;
+       	relTol          	0.0001;
+	    nPreSweeps		    0;
+	    nPostSweeps		    2;
+	    cacheAgglomeration	on;
+	    agglomerator		faceAreaPair;
+	    nCellsInCoarsestLevel	1000;
+	    mergeLevels		    1;
+    };
+
+    U
+    {
+        solver           PBiCG;
+        preconditioner   DILU;
+        tolerance        1e-7;//4
+        relTol           0.05;
+       	minIter          3;
+      	maxIter          100;
+    };
+
+    UFinal
+    {
+        solver           PBiCG;
+        preconditioner   DILU;
+        tolerance        1e-6;
+        relTol           0.0001;
+       	minIter          3;
+      	maxIter          1000;
+    };
+
+    psi
+    {	
+       solver          PCG;
+       preconditioner  DIC;
+       minIter         3;
+       maxIter         100;
+       tolerance       1e-6;//4
+       relTol          0.01;
+    };
+
+    psi+psi+psi  
+    {	
+       solver          PCG;
+       preconditioner  DIC;
+       minIter         3;
+       maxIter         100;
+       tolerance       1e-6; //4
+       relTol          0.05;
+    };
+
+    psiFinal  
+    {	
+       solver          PCG;
+       preconditioner  DIC;
+       minIter         3;
+       maxIter         1000;
+       tolerance       1e-6;
+       relTol          0.0001;
+    };
+}
+
+epsSteady 	1.0e-8;			// convergencia entre un pas de temps i l'altre  (epsilon=error relatiu)
+epsConv 	1.0e-7; 		//convergencia deintre del mateix pas de temps -  sempre una mica per sota del superior.
+				// -sempre una mica mes grans que els del solver
+
+PIMPLE				
+{
+    momentumPredictor       yes;
+    nOuterCorrectors    5;		// és bo que sigui alt (100). Així garantim que passarà al següent PISO step en resoldre el 
+					// criteri de convergencia del SIMPLE.
+    nCorrectors         2;		// NECESSARI A 2 PER RESOLDRE DUES VEGADES 'P'(pd), i aconseguir estabilitat.
+    nNonOrthogonalCorrectors 0;		// Depèn del checkMesh
+
+    residualControl
+    {
+        "(U|pd|psi+psi+psi)"
+        {
+            tolerance 1e-2;
+            relTol 0;
+        }
+    }
+}
+
+relaxationFactors
+{
+    U           0.7;
+    psi         0.8;
+    pd		    0.8;
+}
+
+
+
+
+// ************************************************************************* //

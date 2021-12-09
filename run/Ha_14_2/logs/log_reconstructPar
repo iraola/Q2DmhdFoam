@@ -1,0 +1,223 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : 2.3.0-f5222ca19ce6
+Exec   : /home/localsoft/OpenFOAM/OpenFOAM-2.3.0/platforms/linux64GccDPOpt/bin/reconstructPar -case /home/e4928/OpenFOAM/e4928-2.3.0/run/benchmarking/Ha_14_2 -time 450000:
+Date   : Jul 23 2017
+Time   : 15:44:16
+Host   : "eul0108.ciemat.es"
+PID    : 26256
+Case   : /home/e4928/OpenFOAM/e4928-2.3.0/run/benchmarking/Ha_14_2
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster
+allowSystemOperations : Disallowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+
+
+Reconstructing fields for mesh region0
+
+Time = 450000
+
+Reconstructing FV fields
+
+    Reconstructing volScalarFields
+
+        pd
+        psi
+
+    Reconstructing volVectorFields
+
+        B
+        U
+
+    Reconstructing surfaceScalarFields
+
+        phi
+
+Reconstructing point fields
+
+No point fields
+
+No lagrangian fields
+
+Reconstructing sets:
+Time = 460000
+
+Reconstructing FV fields
+
+    Reconstructing volScalarFields
+
+        psi
+        divj
+        deltaj
+        deltapsi
+        delta
+        pd
+
+    Reconstructing volVectorFields
+
+        ddt0(U)
+        U_0
+        U
+        j
+        B
+        jxB
+
+    Reconstructing surfaceScalarFields
+
+        phi
+        jn
+
+Reconstructing point fields
+
+No point fields
+
+No lagrangian fields
+
+Reconstructing sets:
+Time = 470000
+
+Reconstructing FV fields
+
+    Reconstructing volScalarFields
+
+        psi
+        divj
+        deltaj
+        deltapsi
+        delta
+        pd
+
+    Reconstructing volVectorFields
+
+        ddt0(U)
+        U_0
+        U
+        j
+        B
+        jxB
+
+    Reconstructing surfaceScalarFields
+
+        phi
+        jn
+
+Reconstructing point fields
+
+No point fields
+
+No lagrangian fields
+
+Reconstructing sets:
+Time = 480000
+
+Reconstructing FV fields
+
+    Reconstructing volScalarFields
+
+        psi
+        divj
+        deltaj
+        deltapsi
+        delta
+        pd
+
+    Reconstructing volVectorFields
+
+        ddt0(U)
+        U_0
+        U
+        j
+        B
+        jxB
+
+    Reconstructing surfaceScalarFields
+
+        phi
+        jn
+
+Reconstructing point fields
+
+No point fields
+
+No lagrangian fields
+
+Reconstructing sets:
+Time = 490000
+
+Reconstructing FV fields
+
+    Reconstructing volScalarFields
+
+        psi
+        divj
+        deltaj
+        deltapsi
+        delta
+        pd
+
+    Reconstructing volVectorFields
+
+        ddt0(U)
+        U_0
+        U
+        j
+        B
+        jxB
+
+    Reconstructing surfaceScalarFields
+
+        phi
+        jn
+
+Reconstructing point fields
+
+No point fields
+
+No lagrangian fields
+
+Reconstructing sets:
+Time = 500000
+
+Reconstructing FV fields
+
+    Reconstructing volScalarFields
+
+        psi
+        divj
+        deltaj
+        deltapsi
+        delta
+        pd
+
+    Reconstructing volVectorFields
+
+        ddt0(U)
+        U_0
+        U
+        j
+        B
+        jxB
+
+    Reconstructing surfaceScalarFields
+
+        phi
+        jn
+
+Reconstructing point fields
+
+No point fields
+
+No lagrangian fields
+
+Reconstructing sets:
+End.
+
