@@ -1,0 +1,25 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     3.2                                |
+|   \\  /    A nd           | Web:         http://www.foam-extend.org         |
+|    \\/     M anipulation  | For copyright notice see file Copyright         |
+\*---------------------------------------------------------------------------*/
+Build    : 3.2-0b2838935026
+Exec     : iniLinearTheta
+Date     : Feb 15 2022
+Time     : 13:19:59
+Host     : ganesh26.pppl.gov
+PID      : 8109
+CtrlDict : "/p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0/system/controlDict"
+Case     : /p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0
+nProcs   : 1
+SigFpe   : Enabling floating point exception trapping (FOAM_SIGFPE).
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Time = 0
+
