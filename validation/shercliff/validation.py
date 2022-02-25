@@ -14,6 +14,12 @@ sys.path.insert(1, '../../python')
 from meshAndGo import meshAndGo
 from MHDutils import getLatestTime, shercliff_profile
 
+# Config plots
+font_config = {'font.family'     : 'serif',
+               'font.size'       : 16,
+               'lines.linewidth' : 2}
+plt.rcParams.update(font_config)
+
 ### INITIALIZATIONS
 validation_dir = 'samples'
 postprocess_dir = 'case/postProcessing/sets/'
@@ -161,8 +167,8 @@ for Ha in Ha_list:
 
     # General big plotting
     # Prepare labels
-    label_q2d = 'Q2D Ha=' + str(Ha) + ' Gr='+str(Gr)
-    label_val = 'Analytical Ha=' + str(Ha) + ' Gr='+str(Gr)
+    label_q2d = 'Ha=' + str(Ha) + ' Gr='+str(Gr) + ' Q2D'
+    label_val = 'Ha=' + str(Ha) + ' Gr='+str(Gr) + ' Analytical'
     # Plot unscaled data
     ax.plot(z, U, linestyle='-', color=color_q2d[i], label=label_q2d)
     ax.plot(z_val, U_val, linestyle='--', color=color_val[i], label=label_val)

@@ -7,6 +7,11 @@ sys.path.insert(1, '../../python')
 from meshAndGo import meshAndGo
 from MHDutils import getLatestTime
 
+# Config plots
+font_config = {'font.family'    : 'serif',
+               'font.size'      : 20}
+plt.rcParams.update(font_config)
+
 # Setup case
 tag_dict = {
     'B'   : '?',
@@ -58,8 +63,8 @@ mu = phys_dict['rho0']*phys_dict['nu']
 u_val = (deltaP*phys_dict['rho0']) /(2*mu) * y * (h-y)
 
 # Plot
-ax.plot(y, u_val, label='Poiseuille')
-ax.plot(z, u_q2d, linestyle='dotted', color='r', linewidth=3, label='Q2D')
+ax.plot(y, u_val/u_val.mean(), label='Poiseuille', linewidth=3)
+ax.plot(z, u_q2d/u_val.mean(), linestyle='dotted', color='r', linewidth=7, label='Q2D')
 ax.grid(True)
 ax.set_ylabel('Velocity (m/s)')
 ax.set_xlabel('Channel length (m)')

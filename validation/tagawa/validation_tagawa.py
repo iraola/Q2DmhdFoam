@@ -8,6 +8,12 @@ sys.path.insert(1, '../../python')
 from meshAndGo import meshAndGo
 from MHDutils import getLatestTime
 
+# Config plots
+font_config = {'font.family'     : 'serif',
+               'font.size'       : 16,
+               'lines.linewidth' : 2}
+plt.rcParams.update(font_config)
+
 def plot_csv(file='tagawa.csv'):
     Ha, maxU, gradU = np.loadtxt(file, unpack=True)
     maxU = np.array(maxU)
@@ -202,10 +208,13 @@ for Ha in Ha_list:
     print('\nMaximum dimensionless velocity: ' + str(maxW_q2d[i]) + '\n' )
     # Plot simulation profile
     if Ha > 0:
-        ax1.plot(z, W, label='Q2D Ha='+str(Ha))
+        ax1.plot(z, W, label='Ha = ' + str(Ha))
     # Store the simulated case in other directory
     sp.call("mv case case_" + str(Ha), shell=True)
     i += 1
+# Plot formatting
+ax1.set_ylabel('Dimensionless velocity, ' + r'$W = U \nu / l$')
+ax1.set_xlabel('Dimensionless length, $x/l$')
 ax1.legend(loc='best')
 ax1.grid(True)
 fig1.savefig('validation_tagawa_profiles.png', format='png', dpi=300)
