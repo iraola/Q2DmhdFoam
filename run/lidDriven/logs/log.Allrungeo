@@ -1,0 +1,88 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     3.2                                |
+|   \\  /    A nd           | Web:         http://www.foam-extend.org         |
+|    \\/     M anipulation  | For copyright notice see file Copyright         |
+\*---------------------------------------------------------------------------*/
+Build    : 3.2-0b2838935026
+Exec     : blockMesh
+Date     : Feb 15 2022
+Time     : 13:19:59
+Host     : ganesh26.pppl.gov
+PID      : 8106
+CtrlDict : "/p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0/system/controlDict"
+Case     : /p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0
+nProcs   : 1
+SigFpe   : Enabling floating point exception trapping (FOAM_SIGFPE).
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+
+Creating block mesh from
+    "/p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0/constant/polyMesh/blockMeshDict"
+
+Creating curved edges
+Creating topology blocks
+Creating topology patches
+
+Creating block mesh topology
+
+Check topology
+
+	Basic statistics
+		Number of internal faces : 3
+		Number of boundary faces : 18
+		Number of defined boundary faces : 18
+		Number of undefined boundary faces : 0
+	Checking patch -> block consistency
+
+Creating block offsets
+Creating merge list .
+
+Creating polyMesh from blockMesh
+Creating patches
+Creating cells
+Creating points with scale 1
+    Block 0 cell size :
+        i : 0.0002 .. 0.0002
+        j : 0.000229522669959 .. 0.000740233549966
+        k : 0.04 .. 0.04
+
+    Block 1 cell size :
+        i : 0.0002 .. 0.0002
+        j : 0.000753795737491 .. 0.000753795737491
+        k : 0.04 .. 0.04
+
+    Block 2 cell size :
+        i : 0.0002 .. 0.0002
+        j : 0.000753795737491 .. 0.000753795737491
+        k : 0.04 .. 0.04
+
+    Block 3 cell size :
+        i : 0.0002 .. 0.0002
+        j : 0.000740233549966 .. 0.000229522669959
+        k : 0.04 .. 0.04
+
+
+Writing polyMesh
+----------------
+Mesh Information
+----------------
+  boundingBox: (0 -0.02 0) (0.04 0.02 0.04)
+  nPoints: 30150
+  nCells: 14800
+  nFaces: 59474
+  nInternalFaces: 29326
+----------------
+Patches
+----------------
+  patch 0 (start: 29326 size: 74) name: inlet
+  patch 1 (start: 29400 size: 74) name: outlet
+  patch 2 (start: 29474 size: 200) name: lowerWall
+  patch 3 (start: 29674 size: 200) name: upperWall
+  patch 4 (start: 29874 size: 29600) name: frontAndBack
+
+End
+

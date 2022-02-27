@@ -1,0 +1,6 @@
+-1.4041094284561322
+Weak turbulence:[[1.0, 0.1555307040497268], [1.5, 0.1721910544741928], [2.0, 0.1101142156662318], [2.5, 0.09116881137186943], [3.0, 0.10317253029863567], [3.5, 0.08861031632772386], [4.0, 0.06543079719530139], [4.5, 0.04714602434329647], [5.0, 0.03759935088975448]]
+Strong turbulence:[[0.5, 0.11899557609373689, 0.04534148843133362]]. 
+For more info plot FFT2
+DETAILS: Weak turbulence refers to specific periodic eddies [Wavenumber, PEAK/MAX]
+DETAILS: Strong turbulence refers to wide scale range of turbulent structures [Wavenumber, PEAK/MAX, AVG/MAX]

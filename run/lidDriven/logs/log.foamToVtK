@@ -1,0 +1,39 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     3.2                                |
+|   \\  /    A nd           | Web:         http://www.foam-extend.org         |
+|    \\/     M anipulation  | For copyright notice see file Copyright         |
+\*---------------------------------------------------------------------------*/
+Build    : 3.2-0b2838935026
+Exec     : foamToVTK -latestTime
+Date     : Feb 15 2022
+Time     : 15:39:23
+Host     : ganesh26.pppl.gov
+PID      : 19601
+CtrlDict : "/p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0/system/controlDict"
+Case     : /p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0
+nProcs   : 1
+SigFpe   : Enabling floating point exception trapping (FOAM_SIGFPE).
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 131.6731008
+
+Keeping old VTK files in "/p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0/VTK"
+
+Time: 131.6731008
+    volScalarFields            : theta rho p T B sourceT
+    volVectorFields            : U vorticity
+
+    Internal  : "/p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0/VTK/case_Ha30_Gr40000000.0_90251.vtk"
+    Original cells:14800 points:30150   Additional cells:0  additional points:0
+
+    Patch     : "/p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0/VTK/inlet/inlet_90251.vtk"
+    Patch     : "/p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0/VTK/outlet/outlet_90251.vtk"
+    Patch     : "/p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0/VTK/lowerWall/lowerWall_90251.vtk"
+    Patch     : "/p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0/VTK/upperWall/upperWall_90251.vtk"
+    Patch     : "/p/liquidMHDFoam/Q2D_square/case_Ha30_Gr40000000.0/VTK/frontAndBack/frontAndBack_90251.vtk"
+End
+
