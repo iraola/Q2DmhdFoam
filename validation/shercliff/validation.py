@@ -167,8 +167,8 @@ for Ha in Ha_list:
 
     # General big plotting
     # Prepare labels
-    label_q2d = 'Ha=' + str(Ha) + ' Gr='+str(Gr) + ' Q2D'
-    label_val = 'Ha=' + str(Ha) + ' Gr='+str(Gr) + ' Analytical'
+    label_q2d = f'Ha = {Ha:.0f} - Q2D'
+    label_val = f'Ha = {Ha:.0f} - Analytical'
     # Plot unscaled data
     ax.plot(z, U, linestyle='-', color=color_q2d[i], label=label_q2d)
     ax.plot(z_val, U_val, linestyle='--', color=color_val[i], label=label_val)

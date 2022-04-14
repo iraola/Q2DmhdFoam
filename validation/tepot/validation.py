@@ -86,8 +86,8 @@ for file in os.listdir(validation_dir):
     filename = postprocess_dir + latest_time + '/' + postprocess_file
     z, U, _, _ = np.loadtxt(filename, unpack= True)
     z_val, _, U_val = np.loadtxt(validation_dir + '/' + file, unpack= True)
-    label_q2d = 'Ha=' + str(Ha) + ' Gr='+str(Gr) + ' Q2D'
-    label_val = 'Ha=' + str(Ha) + ' Gr='+str(Gr) + ' Analytical'
+    label_q2d = f'Ha = {Ha:.0f} - Q2D'
+    label_val = f'Ha = {Ha:.0f} - Analytical'
 
     # Plot unscaled data
     ax.plot(z, U, linestyle='-', color=color_q2d[i], label=label_q2d)
