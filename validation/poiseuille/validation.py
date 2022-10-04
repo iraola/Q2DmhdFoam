@@ -43,7 +43,7 @@ mesh_dict = {       # SETUP FOR CYCLIC ONE-CELL CASE
 }
 postprocess_dir = 'case/postProcessing/sets/'
 postprocess_file = 'line_centreProfile_U.xy'
-fig, ax = plt.subplots(figsize=(12,14))
+fig, ax = plt.subplots(figsize=(12,6))
 
 # Run case
 meshAndGo(Ha=0, Re=100, Gr=0, Nx=1, Lx=0.1,
